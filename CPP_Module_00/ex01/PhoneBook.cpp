@@ -11,9 +11,9 @@ PhoneBook::~PhoneBook() {}
 static void	print_field(const std::string &str)
 {
 	if (str.length() > 10)
-		std::cout << str.substr(0, 9) << ".|";
+		std::cout << BLUE << str.substr(0, 9) << YELLOW << ".|" << RESET;
 	else
-		std::cout << std::setw(10) << str << "|";
+		std::cout << BLUE << std::setw(10) << str << YELLOW << "|" << RESET;
 }
 
 void	PhoneBook::set_contact(std::string fields[5])
@@ -24,7 +24,7 @@ void	PhoneBook::set_contact(std::string fields[5])
 	m_contact[m_index].set_phone_number(fields[3]);
 	m_contact[m_index].set_darkest_secret(fields[4]);
 	m_index++;
-	if (m_index == 7)
+	if (m_index > 7)
 		m_index = 0;
 	if (m_size < 8)
 		m_size++;
@@ -32,41 +32,39 @@ void	PhoneBook::set_contact(std::string fields[5])
 
 void	PhoneBook::print_phonebook() const
 {
-	std::cout << YELLOW;
-	std::cout << "+----------+----------+----------+----------+" << std::endl;
-	std::cout << "|     INDEX|FIRST NAME| LAST NAME|  NICKNAME|" << std::endl;
-	std::cout << "+----------+----------+----------+----------+" << std::endl;
+	std::cout << YELLOW << "+----------+----------+----------+----------+\n|";
+	std::cout << BLUE << "     INDEX" << YELLOW << "|";
+	std::cout << BLUE << "FIRST NAME" << YELLOW << "|";
+	std::cout << BLUE << " LAST NAME" << YELLOW << "|";
+	std::cout << BLUE << "  NICKNAME" << YELLOW << "|\n";
+	std::cout << "+----------+----------+----------+----------+\n";
 	for (int i = 0; i < m_size; i++)
 	{
-		std::cout << "|         " << i << "|";
-		print_field(m_contact.get_first_name());
-		print_field(m_contact.get_last_name());
-		print_field(m_contact.get_nick_name());
-		std::cout << "+----------+----------+----------+----------+" << std::endl;
+		std::cout << "|         " << BLUE << i << YELLOW "|";
+		print_field(m_contact[i].get_first_name());
+		print_field(m_contact[i].get_last_name());
+		print_field(m_contact[i].get_nick_name());
+		std::cout << YELLOW << "\n+----------+----------+----------+----------+\n";
 	}
 	std::cout << RESET;
 }
 
 void	PhoneBook::print_contact(int index) const
 {
-	std::cout << BLUE << "Fist name:      ";
-	std::cout << GREEN << m_contact[index].get_first_name() << std::endl;
-	std::cout << BLUE << "Last name:      ";
-	std::cout << GREEN << m_contact[index].get_last_name() << std::endl;
-	std::cout << BLUE << "Nickname:       ";
-	std::cout << GREEN << m_contact[index].get_nick_name() << std::endl;
-	std::cout << BLUE << "Phone number:   ";
-	std::cout << GREEN << m_contact[index].get_phone_number() << std::endl;
-	std::cout << BLUE << "Darkest secret: ";
-	std::cout << GREEN << m_contact[index].get_darkest_secret() << std::endl;
+	std::cout << YELLOW << "Fist name: ";
+	std::cout << BLUE << m_contact[index].get_first_name() << std::endl;
+	std::cout << YELLOW << "Last name: ";
+	std::cout << BLUE << m_contact[index].get_last_name() << std::endl;
+	std::cout << YELLOW << "Nickname: ";
+	std::cout << BLUE << m_contact[index].get_nick_name() << std::endl;
+	std::cout << YELLOW << "Phone number: ";
+	std::cout << BLUE << m_contact[index].get_phone_number() << std::endl;
+	std::cout << YELLOW << "Darkest secret: ";
+	std::cout << BLUE << m_contact[index].get_darkest_secret() << std::endl;
 	std::cout << RESET;
 }
 
-
-
-
-
-
-
-
-
+int	PhoneBook::get_size() const
+{
+	return (m_size);
+}

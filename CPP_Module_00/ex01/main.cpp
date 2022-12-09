@@ -3,15 +3,15 @@
 const std::string ft_show_promt(int i)
 {
     if (i == 0)
-        return ("First name ([A-Z], [a-z], '-') > ");
+        return ("First name > ");
     if (i == 1)
-        return ("Last name ([A-Z], [a-z], '-') > ");
+        return ("Last name > ");
     if (i == 2)
-        return ("Nickname ([A-Z], [a-z], [0-9], '_') > ");
+        return ("Nickname > ");
     if (i == 3)
-        return ("Phone name ([0-9], '+') > ");
+        return ("Phone name > ");
     if (i == 4)
-        return ("Darkest secret ([A-Z], [a-z], [0-9], '_') > ");
+        return ("Darkest secret > ");
     return (NULL);
 }
 
@@ -19,45 +19,42 @@ int	ft_input_validation(const std::string &str, int field_idx)
 {
 	if (str.length() == 0)
 	{
-		std::cout << RED << "The field can't be empty!\n";
-		std::cout << RESET;
+		std::cout << RED << "The field can't be empty!\n" << RESET;
 		return (0);
 	}
 	else if (field_idx == 0 or field_idx == 1)
 	{
 		for (unsigned int i = 0; i < str.length(); i++)
-			if (!((str[i] >= 'A' and str[i] <= 'Z') or \
-				  (str[i] >= 'a' and str[i] <= 'z') or \
-				   str[i] == '-'))
+			if (!isalpha(str[i]) and str[i] != '-')
 			{
-				std::cout << RED << "Only characters [A-Z], [a-z] and '-' are available!\n";
-				std::cout << RESET;
+				std::cout << RED << " Use only [A-Z], [a-z] or '-'!\n" << RESET;
 				return (0);
 			}
 	}
 	else if (field_idx == 2 or field_idx == 4)
 	{
 		for (unsigned int i = 0; i < str.length(); i++)
-			if (!((str[i] >= 'A' and str[i] <= 'Z') or \
-				  (str[i] >= 'a' and str[i] <= 'z') or \
-				  (str[i] >= '0' and str[i] <= '9') or \
-				   str[i] == '_'))
+			if (!isalnum(str[i]) and str[i] != '_')
 			{
-				std::cout << RED << "Only characters [A-Z], [a-z], [0-9] and '_' are available!\n";
-				std::cout << RESET;
+				std::cout << RED << " Use only [A-Z], [a-z], [0-9] or '_'!\n" << RESET;
 				return (0);
 			}
 	}
 	else if (field_idx == 3)
 	{
 		for (unsigned int i = 0; i < str.length(); i++)
-			if (!((str[i] >= '0' and str[i] <= '9') or \
-				   str[i] == '+'))
+		{
+			if (str[i] == '+' and i != 0)
 			{
-				std::cout << RED << "Only characters [0-9] and '+' are available!\n";
-				std::cout << RESET;
+				std::cout << RED << "The '+' sign should only be at the beginning!\n" << RESET;
 				return (0);
 			}
+			if (!isdigit(str[i]) and str[i] != '+')
+			{
+				std::cout << RED << " Use only [0-9] or '+'!\n" << RESET;
+				return (0);
+			}
+		}
 	}
 	return (1);
 }
@@ -68,12 +65,12 @@ void	get_and_check_fields(std::string *fields)
 	{
 		while (true)
 		{
-			std::cout << GREEN << ft_show_promt(i);
+			std::cout << YELLOW << ft_show_promt(i) << WHITE;
 			std::getline(std::cin, fields[i]);
 			std::cout << RESET;
 			if (std::cin.fail())
 			{
-				std::cout << RED << "Bad inputs! Please relanch Phonebook!" << RESET << std::endl;
+				std::cout << RED << "\nBad inputs! Please relanch PhoneBook!\n" << RESET;
 				exit(1);
 			}
 			if (ft_input_validation(fields[i], i))
@@ -82,28 +79,61 @@ void	get_and_check_fields(std::string *fields)
 	}
 }
 
-int	main(int ac, char **av)
+int	main(void)
 {
 	PhoneBook	phonebook;
 	std::string	command;
 	std::string	fields[5];
 	int			index;
 
-	(void)ac;
-	(void)**av;
-	(void)index;
-	while (1)
+	while (true)
 	{
-		std::cout << PINK;
-		std::cout << "Please insert one of these 3 commands: ADD SEARCH EXIT" << std::endl;
-		std::cout << "> ";
+		std::cout << GREEN << "Please insert " << PINK << "ADD";
+		std::cout << GREEN << ", " << PINK << "SEARCH";
+		std::cout << GREEN << " or " << PINK << "EXIT" << std::endl;
+		std::cout << GREEN << "> " << WHITE;
 		std::getline(std::cin, command);
 		std::cout << RESET;
+		if (std::cin.eof())
+		{
+			std::cout << RED << "\nBad inputs! Please relanch PhoneBook!\n" << RESET;
+			return (1);
+		}
 		if (command == "ADD")
 		{
-			std::cout << CYAN << "Enter new contact > " << RESET;
+			std::cout << GREEN << "Enter new contact ⬇\n" << RESET;
 			get_and_check_fields(fields);
 			phonebook.set_contact(fields);
+			std::cout << GREEN << " >>> added <<< \n" << RESET;
 		}
+		if (command == "SEARCH")
+		{
+			phonebook.print_phonebook();
+			while (phonebook.get_size())
+			{
+				std::cout << GREEN << "Insert index to see contact in detail ⬇\n";
+				std::cout << "> " << WHITE;
+				std::cin >> index;
+				std::cout << RESET;
+				if (std::cin.eof())
+				{
+					std::cout << RED << "\nBad inputs! Please relanch PhoneBook!\n" << RESET;
+					return (2);
+				}
+				if (std::cin.fail() or index < 0 or index >= phonebook.get_size())
+				{
+					std::cout << RED << "Invalid index!\n" << RESET;
+					std::cin.clear();
+					std::cin.ignore(256, '\n');
+					continue ;
+				}
+				phonebook.print_contact(index);
+				std::cin.ignore();
+				break ;
+			}
+		}
+		if (command == "EXIT")
+			return(0);
 	}
+	return (0);
 }
