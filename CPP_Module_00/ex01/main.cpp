@@ -9,7 +9,7 @@ const std::string ft_show_promt(int i)
     if (i == 2)
         return ("Nickname > ");
     if (i == 3)
-        return ("Phone name > ");
+        return ("Phone number > ");
     if (i == 4)
         return ("Darkest secret > ");
     return (NULL);
