@@ -70,7 +70,7 @@ void	get_and_check_fields(std::string *fields)
 			std::cout << RESET;
 			if (std::cin.fail())
 			{
-				std::cout << RED << "\nBad inputs! Please relanch PhoneBook!\n" << RESET;
+				std::cout << RED << "\nBad inputs! Please relaunch PhoneBook!\n" << RESET;
 				exit(1);
 			}
 			if (ft_input_validation(fields[i], i))
@@ -96,7 +96,7 @@ int	main(void)
 		std::cout << RESET;
 		if (std::cin.eof())
 		{
-			std::cout << RED << "\nBad inputs! Please relanch PhoneBook!\n" << RESET;
+			std::cout << RED << "\nBad inputs! Please relaunch PhoneBook!\n" << RESET;
 			return (1);
 		}
 		if (command == "ADD")
@@ -117,7 +117,7 @@ int	main(void)
 				std::cout << RESET;
 				if (std::cin.eof())
 				{
-					std::cout << RED << "\nBad inputs! Please relanch PhoneBook!\n" << RESET;
+					std::cout << RED << "\nBad inputs! Please relaunch PhoneBook!\n" << RESET;
 					return (2);
 				}
 				if (std::cin.fail() or index < 0 or index >= phonebook.get_size())
