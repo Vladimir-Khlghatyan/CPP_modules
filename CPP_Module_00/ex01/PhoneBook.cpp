@@ -33,14 +33,14 @@ void	PhoneBook::set_contact(std::string fields[5])
 void	PhoneBook::print_phonebook() const
 {
 	std::cout << YELLOW << "+----------+----------+----------+----------+\n|";
-	std::cout << BLUE << "     INDEX" << YELLOW << "|";
-	std::cout << BLUE << "FIRST NAME" << YELLOW << "|";
-	std::cout << BLUE << " LAST NAME" << YELLOW << "|";
-	std::cout << BLUE << "  NICKNAME" << YELLOW << "|\n";
+	std::cout << BLUE << std::setw(10) << "INDEX" << YELLOW << "|";
+	std::cout << BLUE << std::setw(10) << "FIRST NAME" << YELLOW << "|";
+	std::cout << BLUE << std::setw(10) << "LAST NAME" << YELLOW << "|";
+	std::cout << BLUE << std::setw(10) << "NICKNAME" << YELLOW << "|\n";
 	std::cout << "+----------+----------+----------+----------+\n";
 	for (int i = 0; i < m_size; i++)
 	{
-		std::cout << "|         " << BLUE << i << YELLOW "|";
+		std::cout << "|" << BLUE << std::setw(10) << i << YELLOW "|";
 		print_field(m_contact[i].get_first_name());
 		print_field(m_contact[i].get_last_name());
 		print_field(m_contact[i].get_nick_name());
