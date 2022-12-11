@@ -10,17 +10,17 @@ NAME		= PhoneBook
 
 $(NAME):	$(OBJS)
 			@$(CC) $(OBJS) $(CFLAGS) -o $(NAME)
-			@echo "$(GREEN)$(NAME) created!$(DEFAULT)"
+			@echo "$(GREEN) - $(NAME) created!$(DEFAULT)"
 
 all:		${NAME}
 
 clean:
 			@${RM} ${OBJS}
-			@echo "$(YELLOW)object files deleted!$(DEFAULT)"
+			@echo "$(YELLOW) - object files deleted!$(DEFAULT)"
 
 fclean:		clean
 			@${RM} ${NAME}
-			@echo "$(RED)all deleted!$(DEFAULT)"
+			@echo "$(RED) - executable deleted!$(DEFAULT)"
 
 re:			fclean all
 
