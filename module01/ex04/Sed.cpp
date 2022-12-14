@@ -16,12 +16,12 @@ void	Sed::replace(std::string& s1, std::string& s2)
 	size_t		position = 0;
 	size_t		index = 0;
 
-	std::ifstream	inFileStream(m_inFile);
+	std::ifstream	inFileStream(m_inFile.c_str());
 	if (inFileStream.is_open())
 	{
 		if (std::getline(inFileStream, content, '\0'))
 		{
-			std::ofstream outFileStream(m_outFile);
+			std::ofstream outFileStream(m_outFile.c_str());
 			position = content.find(s1);
 			while (position != std::string::npos)
 			{

@@ -4,7 +4,13 @@ int	main(int ac, char **av)
 {
 	if(ac != 4)
 	{
-		std::cerr << RED << "Number of args must be four!" << RESET << std::endl;
+		std::cerr << RED << "Please enter ";
+		std::cerr << YELLOW << "1) ";
+		std::cerr << RED << "filename ";
+		std::cerr << YELLOW <<  "2) ";
+		std::cerr << RED << "str to find and ";
+		std::cerr << YELLOW << "3) ";
+		std::cerr << RED << "str to replace!" << RESET << std::endl;
 		return (1);
 	}
 	std::string	inFile = av[1];
