@@ -38,3 +38,33 @@ void	Fixed::setRawBits(int const raw)
 {
 	this->_FPV = raw;
 }
+
+//=================================================================================
+
+Fixed::Fixed(const int value)
+{
+	this->_FPV = (value << this->_FB);  // moving bits of "value" to the left (8 bits)
+	std::cout << GREEN << "Int constructor called" << RESET << std::endl;
+}
+
+Fixed::Fixed(const float value)
+{
+	_FPV = roundf(value * (1 << this->_FB));
+	std::cout << GREEN << "Float constructor called" << RESET << std::endl;
+}
+
+float   Fixed::toFloat( void ) const {
+    return static_cast<float>(this->getRawBits());
+}
+
+int	Fixed::toInt(void) const
+{
+	return (this->_FPV >> this->_FB);
+}
+
+
+
+
+
+
+
