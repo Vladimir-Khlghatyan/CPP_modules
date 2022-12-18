@@ -14,17 +14,19 @@
 
 class Fixed
 {
+	private:
+		int					_FPV; 				// Fixed Point Value
+		static const int	_FB = 8;			// Fractional Bits
+		
 	public:
-		Fixed(void);
-		Fixed(const Fixed &other);
-		Fixed &operator=(const Fixed &other);
-		~Fixed(void);
+		Fixed(void);							// Default constructor
+		Fixed(const Fixed &other);				// Copy constructor
+		Fixed &operator=(const Fixed &other);	// Copy assignment operator
+		~Fixed(void);							// Destructor
+
 	public:
 		int		getRawBits(void) const;
 		void	setRawBits(int const raw);
-	private:
-		int					_FPV; 					// Fixed Point Value
-		static const int	_fractional_bits = 8;	// Fractional Bits
 };
 
 #endif

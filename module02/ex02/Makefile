@@ -3,7 +3,7 @@ OBJS 		= ${SRCS:.cpp=.o}
 CC			= c++
 RM			= rm -f
 CFLAGS		= -Wall -Wextra -Werror -std=c++98
-NAME		= fixed01
+NAME		= fixed02
 
 %.o: %.cpp
 			@$(CC) ${CFLAGS} -c $< -o $@

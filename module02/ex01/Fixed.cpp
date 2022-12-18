@@ -10,8 +10,8 @@ Fixed::Fixed(const Fixed &other)
 {
 	
 	std::cout << YELLOW << "Copy constructor called" << RESET << std::endl;
-	this->_FPV = other.getRawBits(); // <-- This is deep copy
-	// *this = other; // <-- This is shallow copy
+	// this->_FPV = other.getRawBits(); // <-- This is deep copy
+	*this = other; 						// <-- This is shallow copy
 }
 
 Fixed &Fixed::operator=(const Fixed &other)
@@ -30,7 +30,7 @@ Fixed::~Fixed(void)
 
 int	Fixed::getRawBits(void) const
 {
-	std::cout << BLUE << "getRawBits member function called" << RESET << std::endl;
+	// std::cout << BLUE << "getRawBits member function called" << RESET << std::endl;
 	return(this->_FPV);
 }
 
@@ -41,20 +41,20 @@ void	Fixed::setRawBits(int const raw)
 
 //=================================================================================
 
-Fixed::Fixed(const int value)
+Fixed::Fixed(const int param)
 {
-	this->_FPV = (value << this->_FB);  // moving bits of "value" to the left (8 bits)
+	this->setRawBits(param << this->_FB);  // moving bits of "param" to the left (8 bits)
 	std::cout << GREEN << "Int constructor called" << RESET << std::endl;
 }
 
-Fixed::Fixed(const float value)
+Fixed::Fixed(const float param)
 {
-	_FPV = roundf(value * (1 << this->_FB));
+	this->setRawBits((int)roundf(param * (1 << this->_FB)));
 	std::cout << GREEN << "Float constructor called" << RESET << std::endl;
 }
 
-float   Fixed::toFloat( void ) const {
-    return static_cast<float>(this->getRawBits());
+float   Fixed::toFloat(void) const {
+    return static_cast<float>(this->_FPV) / (1 << this->_FB);
 }
 
 int	Fixed::toInt(void) const
@@ -62,9 +62,8 @@ int	Fixed::toInt(void) const
 	return (this->_FPV >> this->_FB);
 }
 
-
-
-
-
-
-
+std::ostream &operator<<(std::ostream &o, Fixed const &i)
+{
+	o << i.toFloat();
+	return (o);
+}

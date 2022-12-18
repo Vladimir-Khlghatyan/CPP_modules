@@ -10,8 +10,8 @@ Fixed::Fixed(const Fixed &other)
 {
 	
 	std::cout << YELLOW << "Copy constructor called" << RESET << std::endl;
-	this->_FPV = other.getRawBits(); // <-- This is deep copy
-	// *this = other; // <-- This is shallow copy
+	this->_FPV = other.getRawBits();	// <-- This is deep copy
+	// *this = other; 					// <-- This is shallow copy
 }
 
 Fixed &Fixed::operator=(const Fixed &other)
