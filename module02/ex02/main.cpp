@@ -1,10 +1,10 @@
 #include "Fixed.hpp"
 
-std::string ft_bool(int t)
+static std::string ft_bool(int t)
 {
 	if (t)
-		return ("true");
-	return ("false");
+		return ("\33[1;32mtrue\33[0;m");
+	return ("\33[1;31mfalse\33[0;m");
 
 }
 
@@ -21,7 +21,7 @@ int	main(void)
 	std::cout << b << std::endl;
 	std::cout << Fixed::max( a, b ) << std::endl;
 
-	std::cout << std::endl << CYAN << "---- My tests ----------------" << std::endl;
+	std::cout << std::endl << CYAN << "---- My tests -----" << std::endl;
 	std::cout << std::endl;
 
 	Fixed	x(2.3f);
@@ -33,11 +33,11 @@ int	main(void)
 	std::cout << std::endl;
 
 	std::cout << BLUE << "x > y  ---> " << ft_bool(x > y) << std::endl;
-	std::cout << "x < y  ---> " << ft_bool(x < y) << std::endl;
-	std::cout << "x >= y ---> " << ft_bool(x >= y) << std::endl;
-	std::cout << "x <= y ---> " << ft_bool(x <= y) << std::endl;
-	std::cout << "x == y ---> " << ft_bool(x == y) << std::endl;
-	std::cout << "x != y ---> " << ft_bool(x != y) << std::endl;
+	std::cout << BLUE << "x < y  ---> " << ft_bool(x < y) << std::endl;
+	std::cout << BLUE << "x >= y ---> " << ft_bool(x >= y) << std::endl;
+	std::cout << BLUE << "x <= y ---> " << ft_bool(x <= y) << std::endl;
+	std::cout << BLUE << "x == y ---> " << ft_bool(x == y) << std::endl;
+	std::cout << BLUE << "x != y ---> " << ft_bool(x != y) << std::endl;
 
 	std::cout << std::endl;
 	

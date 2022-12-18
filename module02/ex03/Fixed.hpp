@@ -14,8 +14,6 @@
 # define WHITE	"\33[1;37m"
 # define RESET	"\33[0;m"
 
-# define EPS	0.00000001
-
 class Fixed
 {
 	private:

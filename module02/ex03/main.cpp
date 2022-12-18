@@ -7,82 +7,36 @@ static const std::string	message(bool b)
 	return ("The point (P) is \33[1;31moutside\33[1;37m the triangle ABC.");
 }
 
+static void	print_test(Point const a, Point const b, Point const c, Point const point)
+{
+	static int	index;
+
+	if (!index)
+		std::cout << YELLOW << "-------------------------------------------------------" << RESET << std::endl;
+	std::cout << GREEN << "INPUT" << ++index << ": ";
+	std::cout << CYAN << "A=(" << a.getX() << "; " << a.getY() << ") ";
+	std::cout << CYAN << "B=(" << b.getX() << "; " << b.getY() << ") ";
+	std::cout << CYAN << "C=(" << c.getX() << "; " << c.getY() << ") ";
+	std::cout << YELLOW << "P=(" << point.getX() << "; " << point.getY() << ")" << std::endl;
+	std::cout << GREEN << "OUTPUT" << index << ": ";
+	std::cout << WHITE << message(bsp(a, b, c, point)) << RESET << std::endl;
+	std::cout << YELLOW << "-------------------------------------------------------" << RESET << std::endl;
+}
+
 int	main(void)
 {
 	Point a(-4.0f, 2.0f);
 	Point b(6.0f, 6.0f);
-	Point c(-7.5f, -5.75f);
+	Point c(-7.5f, -5.75f);	
 
-	Point point1(-2.5f, 2.0f);
-	std::cout << YELLOW << "-------------------------------------------------------" << RESET << std::endl;
-	std::cout << GREEN << "INPUT1: ";
-	std::cout << BLUE << "A=(" << a.getX() << "; " << a.getY() << ") ";
-	std::cout << BLUE << "B=(" << b.getX() << "; " << b.getY() << ") ";
-	std::cout << BLUE << "C=(" << c.getX() << "; " << c.getY() << ") ";
-	std::cout << YELLOW << "P=(" << point1.getX() << "; " << point1.getY() << ")" << std::endl;
-	std::cout << GREEN << "OUTPUT1: ";
-	std::cout << WHITE << message(bsp(a, b, c, point1)) << RESET << std::endl;
-	std::cout << YELLOW << "-------------------------------------------------------" << RESET << std::endl;
-
-	Point point2(6.0f, 3.0f);
-	std::cout << GREEN << "INPUT2: ";
-	std::cout << BLUE << "A=(" << a.getX() << "; " << a.getY() << ") ";
-	std::cout << BLUE << "B=(" << b.getX() << "; " << b.getY() << ") ";
-	std::cout << BLUE << "C=(" << c.getX() << "; " << c.getY() << ") ";
-	std::cout << YELLOW << "P=(" << point2.getX() << "; " << point2.getY() << ")" << std::endl;
-	std::cout << GREEN << "OUTPUT2: ";
-	std::cout << WHITE << message(bsp(a, b, c, point2)) << RESET << std::endl;
-	std::cout << YELLOW << "-------------------------------------------------------" << RESET << std::endl;
-
-	Point point3(-4.5f, -1.5f);
-	std::cout << GREEN << "INPUT3: ";
-	std::cout << BLUE << "A=(" << a.getX() << "; " << a.getY() << ") ";
-	std::cout << BLUE << "B=(" << b.getX() << "; " << b.getY() << ") ";
-	std::cout << BLUE << "C=(" << c.getX() << "; " << c.getY() << ") ";
-	std::cout << YELLOW << "P=(" << point3.getX() << "; " << point3.getY() << ")" << std::endl;
-	std::cout << GREEN << "OUTPUT3: ";
-	std::cout << WHITE << message(bsp(a, b, c, point3)) << RESET << std::endl;
-	std::cout << YELLOW << "-------------------------------------------------------" << RESET << std::endl;
-
-	Point point4(2.0f, 4.0f);
-	std::cout << GREEN << "INPUT4: ";
-	std::cout << BLUE << "A=(" << a.getX() << "; " << a.getY() << ") ";
-	std::cout << BLUE << "B=(" << b.getX() << "; " << b.getY() << ") ";
-	std::cout << BLUE << "C=(" << c.getX() << "; " << c.getY() << ") ";
-	std::cout << YELLOW << "P=(" << point4.getX() << "; " << point4.getY() << ")" << std::endl;
-	std::cout << GREEN << "OUTPUT4: ";
-	std::cout << WHITE << message(bsp(a, b, c, point4)) << RESET << std::endl;
-	std::cout << YELLOW << "-------------------------------------------------------" << RESET << std::endl;
-
-	Point point5(-7.5f, -5.75f);
-	std::cout << GREEN << "INPUT5: ";
-	std::cout << BLUE << "A=(" << a.getX() << "; " << a.getY() << ") ";
-	std::cout << BLUE << "B=(" << b.getX() << "; " << b.getY() << ") ";
-	std::cout << BLUE << "C=(" << c.getX() << "; " << c.getY() << ") ";
-	std::cout << YELLOW << "P=(" << point5.getX() << "; " << point5.getY() << ")" << std::endl;
-	std::cout << GREEN << "OUTPUT5: ";
-	std::cout << WHITE << message(bsp(a, b, c, point5)) << RESET << std::endl;
-	std::cout << YELLOW << "-------------------------------------------------------" << RESET << std::endl;
-
-	Point point6(2.0f, -4.0f);
-	std::cout << GREEN << "INPUT6: ";
-	std::cout << BLUE << "A=(" << a.getX() << "; " << a.getY() << ") ";
-	std::cout << BLUE << "B=(" << b.getX() << "; " << b.getY() << ") ";
-	std::cout << BLUE << "C=(" << c.getX() << "; " << c.getY() << ") ";
-	std::cout << YELLOW << "P=(" << point6.getX() << "; " << point6.getY() << ")" << std::endl;
-	std::cout << GREEN << "OUTPUT6: ";
-	std::cout << WHITE << message(bsp(a, b, c, point6)) << RESET << std::endl;
-	std::cout << YELLOW << "-------------------------------------------------------" << RESET << std::endl;
-
-	Point point7(1.0f, 4.0f);
-	std::cout << GREEN << "INPUT7: ";
-	std::cout << BLUE << "A=(" << a.getX() << "; " << a.getY() << ") ";
-	std::cout << BLUE << "B=(" << b.getX() << "; " << b.getY() << ") ";
-	std::cout << BLUE << "C=(" << c.getX() << "; " << c.getY() << ") ";
-	std::cout << YELLOW << "P=(" << point7.getX() << "; " << point7.getY() << ")" << std::endl;
-	std::cout << GREEN << "OUTPUT7: ";
-	std::cout << WHITE << message(bsp(a, b, c, point7)) << RESET << std::endl;
-	std::cout << YELLOW << "-------------------------------------------------------" << RESET << std::endl;
+	print_test(a, b, c, Point(-2.5f, 2.0f));	
+	print_test(a, b, c, Point(6.0f, 3.0f));
+	print_test(a, b, c, Point(-4.5f, -1.5f));
+	print_test(a, b, c, Point(2.0f, 4.0f));
+	print_test(a, b, c, Point(-7.5f, -5.75f));
+	print_test(a, b, c, Point(2.0f, -4.0f));
+	print_test(a, b, c, Point(1.0f, 4.0f));
+	print_test(a, b, c, Point(-9.0f, 7.0f));
 
 	return (0);
 }
