@@ -2,6 +2,7 @@
 # define CLAPTRAP_HPP
 
 # include <iostream>
+# include <iomanip>
 # include <string>
 
 # define RED	"\33[1;31m"
@@ -33,6 +34,12 @@ class ClapTrap
 		void	attack(const std::string& target);
 		void	takeDamage(unsigned int amount);
 		void	beRepaired(unsigned int amount);
+
+	public:
+		void	showAttributes(void);
+		void	setHitPoints(unsigned int amount);
+		void	setEnergyPoints(unsigned int amount);
+		void	setAttackDamage(unsigned int amount);
 	
 };
 
