@@ -37,6 +37,10 @@ int	main(void)
 	b.beRepaired(5);
 	b.showAttributes();
 
+	b.setEnergyPoints(0);
+	b.beRepaired(1);
+	b.showAttributes();
+
 	b.takeDamage(3);
 	b.showAttributes();
 	

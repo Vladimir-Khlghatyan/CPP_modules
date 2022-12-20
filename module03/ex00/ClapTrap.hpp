@@ -4,6 +4,7 @@
 # include <iostream>
 # include <iomanip>
 # include <string>
+# include <typeinfo>
 
 # define RED	"\33[1;31m"
 # define GREEN	"\33[1;32m"
@@ -25,22 +26,23 @@ class ClapTrap
 
 	public:		
 		ClapTrap(void);								// Default constructor
+		ClapTrap(const std::string name);			// Parameterized constructor
 		ClapTrap(const ClapTrap &other);			// Copy constructor
 		ClapTrap &operator=(const ClapTrap &other);	// Copy assignment operator
 		~ClapTrap(void);							// Destructor
 
 	public:		
-		ClapTrap(const std::string name);			// Parameterized constructor
 		void	attack(const std::string& target);
 		void	takeDamage(unsigned int amount);
 		void	beRepaired(unsigned int amount);
 
 	public:
-		void	showAttributes(void);
-		void	setHitPoints(unsigned int amount);
-		void	setEnergyPoints(unsigned int amount);
-		void	setAttackDamage(unsigned int amount);
-	
+		void		showAttributes(void);
+		void		setHitPoints(unsigned int amount);
+		void		setEnergyPoints(unsigned int amount);
+		void		setAttackDamage(unsigned int amount);
+		std::string	getClassName(void);
+
 };
 
 #endif

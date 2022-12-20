@@ -1,28 +1,28 @@
-#include "ScavTrap.hpp"
+#include "FragTrap.hpp"
 
 //==== constructors =====================================================================
 
-ScavTrap::ScavTrap(void)
+FragTrap::FragTrap(void)
 {
 	this->_name = "Unnamed";
 	this->_hit_points = 100;
-	this->_energy_points = 50;
-	this->_attack_damage = 20;
+	this->_energy_points = 100;
+	this->_attack_damage = 30;
 	std::cout << PINK << _name << " " + this->getClassName() + " ";
 	std::cout << GREEN << "created." << RESET << std::endl;
 }
 
-ScavTrap::ScavTrap(const std::string name)// : ClapTrap(name)
+FragTrap::FragTrap(const std::string name) : ClapTrap(name)
 {
 	this->_name = name;
 	this->_hit_points = 100;
-	this->_energy_points = 50;
-	this->_attack_damage = 20;
+	this->_energy_points = 100;
+	this->_attack_damage = 30;
 	std::cout << this->getClassName() << WHITE << " named " << PINK << _name;
 	std::cout << GREEN << " created." << RESET << std::endl;
 }
 
-ScavTrap::ScavTrap(const ScavTrap &other)
+FragTrap::FragTrap(const FragTrap &other)
 {
 	this->_name = other._name;
 	this->_hit_points = other._hit_points;
@@ -34,7 +34,7 @@ ScavTrap::ScavTrap(const ScavTrap &other)
 	std::cout << RESET << std::endl;
 }
 
-ScavTrap &ScavTrap::operator=(const ScavTrap &other)
+FragTrap &FragTrap::operator=(const FragTrap &other)
 {
 	std::cout << BLUE << "Copy assignment operator of " << this->getClassName();
 	std::cout << BLUE << " called (" << PINK << _name << BLUE << " changed his name to ";
@@ -49,7 +49,7 @@ ScavTrap &ScavTrap::operator=(const ScavTrap &other)
 	return (*this);
 }
 
-ScavTrap::~ScavTrap(void)
+FragTrap::~FragTrap(void)
 {
 	if (_name.compare("Unnamed") == 0)
 	{
@@ -65,7 +65,7 @@ ScavTrap::~ScavTrap(void)
 
 //==== member functions by subject ======================================================
 
-void	ScavTrap::attack(const std::string& target)
+void	FragTrap::attack(const std::string& target)
 {
 	std::string MESSAGE = "empty";
 
@@ -89,15 +89,15 @@ void	ScavTrap::attack(const std::string& target)
 	_energy_points--;
 }
 
-void	ScavTrap::guardGate()
+void	FragTrap::highFivesGuys(void)
 {
 	std::cout << PINK << _name;
-	std::cout << WHITE << " is now in Gate keeper mode." << RESET << std::endl;
+	std::cout << WHITE << " gives everyone high fives." << RESET << std::endl;
 }
 
 //==== member functions by me (for better testing)=======================================
 
-std::string	ScavTrap::getClassName(void)
+std::string	FragTrap::getClassName(void)
 {
 	std::string s = typeid(*this).name();
 	s = s.substr(1);

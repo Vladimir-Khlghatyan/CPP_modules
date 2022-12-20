@@ -2,8 +2,8 @@ SRCS		= ${wildcard ./*.cpp}
 OBJS 		= ${SRCS:.cpp=.o}
 CC			= c++
 RM			= rm -f
-CFLAGS		= -Wall -Wextra -Werror -std=c++98
-NAME		= ClapTrap
+CFLAGS		= -Wall -Wextra -Werror -Wshadow -Wno-shadow -std=c++98
+NAME		= FragTrap
 
 %.o: %.cpp *.hpp
 			@$(CC) ${CFLAGS} -c $< -o $@

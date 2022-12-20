@@ -3,7 +3,7 @@ OBJS 		= ${SRCS:.cpp=.o}
 CC			= c++
 RM			= rm -f
 CFLAGS		= -Wall -Wextra -Werror -std=c++98
-NAME		= ClapTrap
+NAME		= FragTrap
 
 %.o: %.cpp *.hpp
 			@$(CC) ${CFLAGS} -c $< -o $@
