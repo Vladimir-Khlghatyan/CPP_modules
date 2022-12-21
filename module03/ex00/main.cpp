@@ -3,10 +3,13 @@
 int	main(void)
 {
 	ClapTrap a("Robert");
+	std::cout << WHITE << "-------------------------------------------------------" << RESET << std::endl;
 	ClapTrap b("Serj");
+	std::cout << WHITE << "-------------------------------------------------------" << RESET << std::endl;
 	ClapTrap c(a);
-	
-	b = a;	
+	std::cout << WHITE << "-------------------------------------------------------" << RESET << std::endl;
+	b = a;
+	std::cout << WHITE << "-------------------------------------------------------" << RESET << std::endl;
 	b.showAttributes();
 
 	b.setEnergyPoints(5);

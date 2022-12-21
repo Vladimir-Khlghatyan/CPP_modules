@@ -22,7 +22,7 @@ FragTrap::FragTrap(const std::string name)// : ClapTrap(name)
 	std::cout << GREEN << " created." << RESET << std::endl;
 }
 
-FragTrap::FragTrap(const FragTrap &other)
+FragTrap::FragTrap(const FragTrap &other) : ClapTrap(other)
 {
 	this->_name = other._name;
 	this->_hit_points = other._hit_points;

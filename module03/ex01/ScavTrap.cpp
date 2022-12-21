@@ -22,8 +22,9 @@ ScavTrap::ScavTrap(const std::string name)// : ClapTrap(name)
 	std::cout << GREEN << " created." << RESET << std::endl;
 }
 
-ScavTrap::ScavTrap(const ScavTrap &other)
+ScavTrap::ScavTrap(const ScavTrap &other) : ClapTrap(other)
 {
+	
 	this->_name = other._name;
 	this->_hit_points = other._hit_points;
 	this->_energy_points = other._energy_points;

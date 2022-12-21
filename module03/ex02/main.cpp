@@ -3,10 +3,13 @@
 int	main(void)
 {
 	FragTrap a("Robert");
+	std::cout << WHITE << "-------------------------------------------------------" << RESET << std::endl;
 	FragTrap b("Serj");
+	std::cout << WHITE << "-------------------------------------------------------" << RESET << std::endl;
 	FragTrap c(a);
-	
+	std::cout << WHITE << "-------------------------------------------------------" << RESET << std::endl;
 	b = a;
+	std::cout << WHITE << "-------------------------------------------------------" << RESET << std::endl;
 
 	b.highFivesGuys();
 	

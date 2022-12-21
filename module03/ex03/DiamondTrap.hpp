@@ -21,14 +21,14 @@ class DiamondTrap : public FragTrap, public ScavTrap
 		~DiamondTrap(void);									// Destructor
 
 	public:
-		using	ScavTrap::attack;
-		void	whoAmI(void);
+		using		ScavTrap::attack;
+		void		whoAmI(void);
 
 	public:
-		using	ClapTrap::showAttributes;
-		using	ClapTrap::setHitPoints;
-		using	ClapTrap::setEnergyPoints;
-		using	ClapTrap::setAttackDamage;
+		using		ClapTrap::setHitPoints;
+		using		ClapTrap::setEnergyPoints;
+		using		ClapTrap::setAttackDamage;
+		void		showAttributes(void);
 		std::string	getClassName(void);
 };
 
