@@ -2,6 +2,7 @@
 
 int	main(void)
 {
+	ClapTrap x;
 	ClapTrap a("Robert");
 	std::cout << WHITE << "-------------------------------------------------------" << RESET << std::endl;
 	ClapTrap b("Serj");
