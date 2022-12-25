@@ -2,7 +2,7 @@
 
 //==== constructors =====================================================================
 
-Brain::Brain(void)
+Brain::Brain(void) : _noIdea("")
 {
 	for (int i = 0; i < 100; i++)
 		_ideas[i] = "";
@@ -10,7 +10,7 @@ Brain::Brain(void)
 	std::cout << BLUE << this->getClassName() << WHITE << " class called." << RESET << std::endl;
 }
 
-Brain::Brain(const Brain &other)
+Brain::Brain(const Brain &other) : _noIdea("")
 {
 	for (int i = 0; i < 100; i++)
 		_ideas[i] = other._ideas[i];
@@ -53,8 +53,7 @@ const std::string	&Brain::getIdea(int index) const
 {
 	if (index >= 0 and index < 100)
 		return (_ideas[index]);
-	const std::string &str = "";
-	return (str);
+	return (_noIdea);
 }
 
 std::string	Brain::getClassName(void)

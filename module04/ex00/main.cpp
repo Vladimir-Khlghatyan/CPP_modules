@@ -67,8 +67,8 @@ int	main(void)
 	Cat	c2;
 	std::cout << YELLOW << "\nCat c3(c1); \33[1;30m// line " << __LINE__ + 1 << " ⬇ " << RESET << std::endl;
 	Cat	c3(c1);
-	std::cout << YELLOW << "\nc2 = c2; \33[1;30m// line " << __LINE__ + 1 << " ⬇ " << RESET << std::endl;
-	c2 = c2;
+	std::cout << YELLOW << "\nc2 = c3; \33[1;30m// line " << __LINE__ + 1 << " ⬇ " << RESET << std::endl;
+	c2 = c3;
 	std::cout << std::endl;
 
 	return (0);

@@ -19,7 +19,8 @@
 class Brain
 {
 	private:
-		std::string	_ideas[100];
+		std::string			_ideas[100];
+		const std::string	_noIdea;
 
 	public:		
 		Brain(void);							// Default constructor

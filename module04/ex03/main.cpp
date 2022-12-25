@@ -25,6 +25,5 @@ int	main(void)
 
 	std::cout << "\n\n- MY TESTS -------------------" << std::endl;
 	ft_tests();
-
 	return (0);
 }

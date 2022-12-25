@@ -66,8 +66,5 @@ void	Dog::setBrainIdea(int index, const std::string& idea)
 
 const std::string	&Dog::getBrainIdea(int index) const
 {
-	if (index >= 0 and index < 100)
-		return (_brain->getIdea(index));
-	const std::string &str = "";
-	return (str);
+	return (_brain->getIdea(index));
 }
