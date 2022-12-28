@@ -6,6 +6,7 @@
 # include <string>
 # include <typeinfo>
 # include <exception>
+# include "Form.hpp"
 
 # define RED	"\33[1;31m"
 # define GREEN	"\33[1;32m"
@@ -15,6 +16,8 @@
 # define CYAN	"\33[1;36m"
 # define WHITE	"\33[1;37m"
 # define RESET	"\33[0;m"
+
+class Form;
 
 class Bureaucrat
 {
@@ -46,6 +49,7 @@ class Bureaucrat
 		void				incrementGrade(void);
 		void				decrementGrade(void);
 		const std::string	getClassName(void);
+		void				signForm(Form &f);
 };
 
 // << overload

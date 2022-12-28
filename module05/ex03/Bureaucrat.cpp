@@ -83,6 +83,39 @@ void	Bureaucrat::decrementGrade(void)
 	this->_grade++;
 }
 
+void	Bureaucrat::signForm(Form &f)
+{
+	if (f.getIsSigned())
+	{
+		std::cout << YELLOW << _name << " signed " << f.getName();
+		std::cout << "." << RESET << std::endl;
+	}
+	else if (this->_grade <= f.getSignGrade())
+	{
+		std::cout << YELLOW << _name << " hasn't yet signed " << f.getName();
+		std::cout << "." << RESET << std::endl;	
+	}
+	else
+	{
+		std::cout << YELLOW << _name << " couldn’t sign " << f.getName();
+		std::cout << " because he/she hasn't enough grade." << RESET << std::endl;
+	}
+
+}
+
+void	Bureaucrat::executeForm(Form const &form)
+{
+	try
+	{
+		form.execute(*this);
+		std::cout << GREEN << this->_name << " executed " << form.getName() << "." << RESET << std::endl;
+	}
+	catch (const std::exception &e)
+	{
+		std::cout << RED << e.what() << RESET << std::endl;
+	}
+}
+
 //==== member functions by me (for better testing)=======================================
 
 const std::string	Bureaucrat::getClassName(void)
