@@ -112,7 +112,7 @@ void	Form::beSigned(Bureaucrat &b)
 const std::string	Form::getClassName(void)
 {
 	std::string s = typeid(*this).name();
-	s = s.substr(2);
+	s = s.substr(1);
 	return (s);
 }
 

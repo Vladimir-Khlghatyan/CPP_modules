@@ -69,7 +69,7 @@ void	Bureaucrat::incrementGrade(void)
 {
 	if (this->_grade == 1)
 		throw(Bureaucrat::GradeTooHighException());
-	std::cout << CYAN << "Incrementing " << _name << "'s current grade  by 1 (before ";
+	std::cout << CYAN << "Incrementing " << _name << "'s current grade by 1 (before ";
 	std::cout << _grade << ", after " << _grade - 1 << ")." << RESET << std::endl;
 	this->_grade--;
 }
@@ -78,7 +78,7 @@ void	Bureaucrat::decrementGrade(void)
 {
 	if (this->_grade == 150)
 		throw(Bureaucrat::GradeTooLowException());
-	std::cout << CYAN << "Decrementing " << _name << "'s current grade  by 1 (before ";
+	std::cout << CYAN << "Decrementing " << _name << "'s current grade by 1 (before ";
 	std::cout << _grade << ", after " << _grade + 1 << ")." << RESET << std::endl;
 	this->_grade++;
 }

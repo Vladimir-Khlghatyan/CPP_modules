@@ -10,10 +10,6 @@ void	ft_test3(void);
 void	ft_test4(void);
 void	ft_test5(void);
 void	ft_test6(void);
-// void	ft_test7(void);
-// void	ft_test8(void);
-// void	ft_test9(void);
-// void	ft_test10(void);
 
 int	main(void)
 {
@@ -23,10 +19,6 @@ int	main(void)
 	ft_test4();
 	ft_test5();
 	ft_test6();
-	// ft_test7();
-	// ft_test8();
-	// ft_test9();
-	// ft_test10();
 	return (0);
 }
 

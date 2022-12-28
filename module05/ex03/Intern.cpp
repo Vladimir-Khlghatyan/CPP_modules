@@ -1,4 +1,7 @@
 #include "Intern.hpp"
+#include "ShrubberyCreationForm.hpp"
+#include "RobotomyRequestForm.hpp"
+#include "PresidentialPardonForm.hpp"
 
 //==== constructors =====================================================================
 
@@ -10,6 +13,7 @@ Intern::Intern(void)
 
 Intern::Intern(const Intern &other)
 {
+	(void)other;
 	std::cout << GREEN << "Copy constructor of " << this->getClassName();
 	std::cout << " class called." << RESET << std::endl;
 }
@@ -39,11 +43,11 @@ const char	*Intern::InternException::what() const throw()
 
 //==== member functions by subject ======================================================
 
-Form	*Intern::makeForm(std::string &formName, std::string &formTarget)
+Form	*Intern::makeForm(const std::string &formName, const std::string &formTarget) const
 {
-	Form *(Inter::*ptr_member_func[3])(const std::string &target) = \
+	Form *(Intern::*ptr_member_func[3])(const std::string &target) const = \
 				{&Intern::makeP, &Intern::makeR, &Intern::makeSh};
-	std::string	request[3] = {"presidential pardon", "robotomy request", "shrubbery creation"};
+	std::string	request[3] = {"ShrubberyCreationForm", "RobotomyRequestForm", "PresidentialPardonForm"};
 
 	for (int i = 0; i < 3; i++)
 	{
@@ -51,7 +55,7 @@ Form	*Intern::makeForm(std::string &formName, std::string &formTarget)
 		{
 			std::cout << GREEN << "Intern creates \"" << formName;
 		std::cout <<"\" form." << RESET << std::endl;
-			return (ptr_member_func[i](target));
+			return ((this->*ptr_member_func[i])(formTarget));
 		}
 	}
 	throw (InternException());
