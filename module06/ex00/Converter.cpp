@@ -160,7 +160,7 @@ Converter::operator float(void)
 		std::cout << " float: Out of range" << std::endl;
 		return (NAN);
 	};
-	std::cout << " float: " << std::fixed << std::setprecision(1) << f << std::endl;
+	std::cout << " float: " << std::fixed << std::setprecision(1) << f << "f" << std::endl;
 	return (f);
 }
 
@@ -196,6 +196,6 @@ Converter::operator double(void)
 		std::cout << "double: Out of range" << std::endl;
 		return (NAN);
 	};
-	std::cout << "double: " << std::fixed << std::setprecision(1) << d << "f" << std::endl;
+	std::cout << "double: " << std::fixed << std::setprecision(1) << d << std::endl;
 	return (d);
 }
