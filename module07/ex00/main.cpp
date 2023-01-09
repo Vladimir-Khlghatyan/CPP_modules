@@ -1,31 +1,5 @@
 #include "whatever.hpp"
 
-template <typename T>
-void    swap(T& a, T& b)
-{
-    T   tmp;
-
-    tmp = a;
-    a = b;
-    b = tmp;
-}
-
-template <typename T>
-T   max(T& a, T& b)
-{
-    if (a > b)
-        return (a);
-    return (b);
-}
-
-template <typename T>
-T   min(T& a, T& b)
-{
-    if (a < b)
-        return (a);
-    return (b);
-}
-
 int main(void)
 {
     std::cout << YELLOW << "--- SUBJECT MAIN ----------" << RESET << std::endl;
@@ -76,8 +50,8 @@ int main(void)
     std::cout << "max( float1, float2 ) = " << ::max( float1, float2 ) << "f" << std::endl;
     std::cout << std::endl;
 
-    double double1 = 4242.42;
-    double double2 = 42.4242;
+    double double1 = 42.4242;
+    double double2 = 4242.42;
 
     ::swap( double1, double2 );
     std::cout << "\33[1;32mdouble1\33[1;37m = " << double1 << "\n\33[1;32mdouble2\33[1;37m = " << double2 << std::endl;

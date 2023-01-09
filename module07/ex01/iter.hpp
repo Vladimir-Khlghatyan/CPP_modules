@@ -15,9 +15,19 @@
 # define RESET	"\33[0;m"
 
 template <typename T>
-void	iter(T* array, size_t length, void (*func)(T&));
+void	iter(T* array, size_t length, void (*func)(T&))
+{
+	for (size_t i = 0; i < length; i++)
+		func(array[i]);
+}
 
 template <typename T>
-void	myPrint(T& item);
+void	myPrint(T& item)
+{
+	static size_t idx;
+	std::cout << RESET << "item[" << idx << "]: ";
+	std::cout << WHITE << item <<  RESET << std::endl;
+	idx++;
+}
 
 #endif
