@@ -1,6 +1,7 @@
 #include "Array.hpp"
 
-#define MAX_VAL 750
+// this is subject main
+// #define MAX_VAL 750
 // int main(int, char**)
 // {
 //     Array<int> numbers(MAX_VAL);
@@ -53,137 +54,138 @@
 
 int main(void)
 {
-    Array<int> arrInt(5);
-    Array<char> arrChar(5);
-    Array<std::string> arrString(3);
+    Array<char> carr(5);
+    carr[0] = 'B';
+    carr[1] = 'a';
+    carr[2] = 'r';
+    carr[3] = 'e';
+    carr[4] = 'v';
 
-    arrInt[0] = 10;
-    arrInt[1] = 11;
-    arrInt[2] = 12;
-    arrInt[3] = 13;
-    arrInt[4] = 14;
 
-    arrChar[0] = 'a';
-    arrChar[1] = 'b';
-    arrChar[2] = 'c';
-    arrChar[3] = 'd';
-    arrChar[4] = 'e';
+    Array<float> farr(3);
+    farr[0] = 24.42;
+    farr[1] = 42.24;
+    farr[2] = 100.01;
 
-    arrString[0] = "hello";
-    arrString[1] = "world";
-    arrString[2] = ":D";
+    Array<std::string> sarr(3);
+    sarr[0] = "I";
+    sarr[1] = "Love";
+    sarr[2] = "Armenia❤️";
 
-    std::cout << "\n========== BASIC TESTS ==========\n" << std::endl;
+    std::cout << YELLOW << "\n======= BASIC TESTS ============================" << RESET << std::endl;
 
-    std::cout << "INT ARRAY:" << std::endl;
-    std::cout << "size: " << arrInt.size() << '\n' << std::endl;
-    for (std::size_t i = 0; i < arrInt.size(); ++i) {
-        std::cout << arrInt[i] << std::endl;
-    }
+    std::cout << GREEN << "CHAR ARRAY:" << RESET << std::endl;
+    std::cout << BLUE << "size = " << carr.size() << RESET << std::endl;
+    for (unsigned int i = 0; i < carr.size(); ++i)
+        std::cout << BLACK<< " item[" << i << "]: " << WHITE << carr[i] << RESET;
 
-    std::cout << "\nCHAR ARRAY:" << std::endl;
-    std::cout << "size: " << arrChar.size() << '\n' << std::endl;
-    for (std::size_t i = 0; i < arrChar.size(); ++i) {
-        std::cout << arrChar[i] << std::endl;
-    }
+    std::cout << GREEN << "\n\nFLOAT ARRAY:" << RESET << std::endl;
+    std::cout << BLUE << "size = " << farr.size() << RESET << std::endl;
+    for (unsigned int i = 0; i < farr.size(); ++i)
+        std::cout << BLACK<< " item[" << i << "]: " << WHITE << farr[i] << RESET;
 
-    std::cout << "\nSTRING ARRAY:" << std::endl;
-    std::cout << "size: " << arrString.size() << '\n' << std::endl;
-    for (std::size_t i = 0; i < arrString.size(); ++i) {
-        std::cout << arrString[i] << std::endl;
-    }
+    std::cout << GREEN << "\n\nSTRING ARRAY:" << RESET << std::endl;
+    std::cout << BLUE << "size = " << sarr.size() << RESET << std::endl;
+    for (unsigned int i = 0; i < sarr.size(); ++i)
+        std::cout << BLACK<< " item[" << i << "]: " << WHITE << sarr[i] << RESET;
 
-    std::cout << "\n========== EXCEPTIONS ==========\n" << std::endl;
+    std::cout << YELLOW << "\n\n\n======= EXCEPTIONS ============================" << RESET << std::endl;
 
     try {
-        std::cout << arrString[1] << std::endl;
+        std::cout << WHITE << sarr[2] << RESET << std::endl;
     } catch (std::exception& e) {
         std::cerr << e.what() << std::endl;
     }
     try {
-        std::cout << arrString[-1] << std::endl;
+        std::cout << WHITE << sarr[-1] << RESET << std::endl;
     } catch (std::exception& e) {
         std::cerr << e.what() << std::endl;
     }
     try {
-        std::cout << arrString[5] << std::endl;
+        std::cout << WHITE << sarr[5] << RESET << std::endl;
+    } catch (std::exception& e) {
+        std::cerr << e.what() << std::endl;
+    }
+    try {
+        std::cout << WHITE << farr[1] << RESET << std::endl;
+    } catch (std::exception& e) {
+        std::cerr << e.what() << std::endl;
+    }
+    try {
+        std::cout << WHITE << farr[10] << RESET << std::endl;
     } catch (std::exception& e) {
         std::cerr << e.what() << std::endl;
     }
 
-    std::cout << "\n========== COPY CONSTRUCTOR (DEEP) ==========\n" << std::endl;
+    std::cout << YELLOW << "\n\n======= COPY CONSTRUCTOR (deep copy) ==========" << RESET << std::endl;
 
-    Array<std::string> copy(arrString);
+    std::cout << GREEN << "STRING ARRAY:" << RESET << std::endl;
+    std::cout << BLUE << "size = " << sarr.size() << RESET << std::endl;
+    for (unsigned int i = 0; i < sarr.size(); ++i)
+        std::cout << BLACK<< " item[" << i << "]: " << WHITE << sarr[i] << RESET;
 
-    std::cout << "\nSTRING ARRAY:" << std::endl;
-    std::cout << "size: " << arrString.size() << '\n' << std::endl;
-    for (std::size_t i = 0; i < arrString.size(); ++i) {
-        std::cout << arrString[i] << std::endl;
-    }
-    std::cout << "\nCOPY ARRAY:" << std::endl;
-    std::cout << "size: " << copy.size() << '\n' << std::endl;
-    for (std::size_t i = 0; i < copy.size(); ++i) {
-        std::cout << copy[i] << std::endl;
-    }
+    Array<std::string> sarr_copy(sarr);
 
-    std::cout << "\n----- change string array[2] to \":(\"-----" << std::endl;
-    arrString[2] = ":(";
+    std::cout << GREEN << "\n\nSTRING ARRAY_COPY:" << RESET << std::endl;
+    std::cout << BLUE << "size = " << sarr_copy.size() << RESET << std::endl;
+    for (unsigned int i = 0; i < sarr_copy.size(); ++i)
+        std::cout << BLACK<< " item[" << i << "]: " << WHITE << sarr_copy[i] << RESET;
 
-    std::cout << "\nSTRING ARRAY:" << std::endl;
-    std::cout << "size: " << arrString.size() << '\n' << std::endl;
-    for (std::size_t i = 0; i < arrString.size(); ++i) {
-        std::cout << arrString[i] << std::endl;
-    }
-    std::cout << "\nCOPY ARRAY:" << std::endl;
-    std::cout << "size: " << copy.size() << '\n' << std::endl;
-    for (std::size_t i = 0; i < copy.size(); ++i) {
-        std::cout << copy[i] << std::endl;
-    }
+    std::cout << PINK << "\n\n----- change string array[2] to \"Yerevan❤️\"-----" << RESET << std::endl;
+    sarr[2] = "Yerevan❤️";
 
-    std::cout << "\n========== ASSIGNMENT OPERATOR (DEEP) ==========\n" << std::endl;
+    std::cout << GREEN << "STRING ARRAY:" << RESET << std::endl;
+     std::cout << BLUE << "size = " << sarr.size() << RESET << std::endl;
+    for (unsigned int i = 0; i < sarr.size(); ++i)
+        std::cout << BLACK<< " item[" << i << "]: " << WHITE << sarr[i] << RESET;
 
-    Array<std::string> copy2(5);
+    std::cout << GREEN << "\n\nSTRING ARRAY_COPY:" << RESET << std::endl;
+    std::cout << BLUE << "size = " << sarr_copy.size() << RESET << std::endl;
+    for (unsigned int i = 0; i < sarr_copy.size(); ++i)
+        std::cout << BLACK<< " item[" << i << "]: " << WHITE << sarr_copy[i] << RESET;
 
-    std::cout << "\nSTRING ARRAY:" << std::endl;
-    std::cout << "size: " << arrString.size() << '\n' << std::endl;
-    for (std::size_t i = 0; i < arrString.size(); ++i) {
-        std::cout << arrString[i] << std::endl;
-    }
-    std::cout << "\nCOPY ARRAY:" << std::endl;
-    std::cout << "size: " << copy2.size() << '\n' << std::endl;
-    for (std::size_t i = 0; i < copy2.size(); ++i) {
-        std::cout << copy2[i] << std::endl;
-    }
+    std::cout << YELLOW << "\n\n\n======= ASSIGNMENT OPERATOR (deep) ============" << RESET << std::endl;
 
-    std::cout << "\n----- copy = string array -----" << std::endl;
-    copy2 = arrString;
+    std::cout << GREEN << "STRING ARRAY:" << RESET << std::endl;
+    std::cout << BLUE << "size = " << sarr.size() << RESET << std::endl;
+    for (unsigned int i = 0; i < sarr.size(); ++i)
+        std::cout << BLACK<< " item[" << i << "]: " << WHITE << sarr[i] << RESET;
 
-    std::cout << "\nSTRING ARRAY:" << std::endl;
-    std::cout << "size: " << arrString.size() << '\n' << std::endl;
-    for (std::size_t i = 0; i < arrString.size(); ++i) {
-        std::cout << arrString[i] << std::endl;
-    }
-    std::cout << "\nCOPY ARRAY:" << std::endl;
-    std::cout << "size: " << copy2.size() << '\n' << std::endl;
-    for (std::size_t i = 0; i < copy2.size(); ++i) {
-        std::cout << copy2[i] << std::endl;
-    }
+    Array<std::string> sarr_copy2(4);
 
-    std::cout << "\n----- change string array[2] to \":D\"-----" << std::endl;
-    arrString[2] = ":D";
+    std::cout << GREEN << "\n\nSTRING ARRAY_COPY2:" << RESET << std::endl;
+    std::cout << BLUE << "size = " << sarr_copy2.size() << RESET << std::endl;
+    for (unsigned int i = 0; i < sarr_copy2.size(); ++i)
+        std::cout << BLACK<< " item[" << i << "]: " << WHITE << sarr_copy2[i] << RESET;
 
-    std::cout << "\nSTRING ARRAY:" << std::endl;
-    std::cout << "size: " << arrString.size() << '\n' << std::endl;
-    for (std::size_t i = 0; i < arrString.size(); ++i) {
-        std::cout << arrString[i] << std::endl;
-    }
-    std::cout << "\nCOPY ARRAY:" << std::endl;
-    std::cout << "size: " << copy2.size() << '\n' << std::endl;
-    for (std::size_t i = 0; i < copy2.size(); ++i) {
-        std::cout << copy2[i] << std::endl;
-    }
+    std::cout << PINK << "\n\n----- array_copy2 = array ----------------------" << RESET << std::endl;
+    sarr_copy2 = sarr;
 
-    return 0;
+    std::cout << GREEN << "STRING ARRAY:" << RESET << std::endl;
+    std::cout << BLUE << "size = " << sarr.size() << RESET << std::endl;
+    for (unsigned int i = 0; i < sarr.size(); ++i)
+        std::cout << BLACK<< " item[" << i << "]: " << WHITE << sarr[i] << RESET;
+
+    std::cout << GREEN << "\n\nSTRING ARRAY_COPY2:" << RESET << std::endl;
+    std::cout << BLUE << "size = " << sarr_copy2.size() << RESET << std::endl;
+    for (unsigned int i = 0; i < sarr_copy2.size(); ++i)
+        std::cout << BLACK<< " item[" << i << "]: " << WHITE << sarr_copy2[i] << RESET;
+
+    std::cout << PINK << "\n\n----- change string array[2] to \"Martuni❤️\"-----" << RESET << std::endl;
+    sarr[2] = "Martuni❤️";
+
+    std::cout << GREEN << "STRING ARRAY:" << RESET << std::endl;
+    std::cout << BLUE << "size = " << sarr.size() << RESET << std::endl;
+    for (unsigned int i = 0; i < sarr.size(); ++i)
+        std::cout << BLACK<< " item[" << i << "]: " << WHITE << sarr[i] << RESET;
+
+    std::cout << GREEN << "\n\nSTRING ARRAY_COPY2:" << RESET << std::endl;
+    std::cout << BLUE << "size = " << sarr_copy2.size() << RESET << std::endl;
+    for (unsigned int i = 0; i < sarr_copy2.size(); ++i)
+        std::cout << BLACK<< " item[" << i << "]: " << WHITE << sarr_copy2[i] << RESET;
+
+    std::cout << "\n" << std::endl;    
+    return (0);
 }
 
 
