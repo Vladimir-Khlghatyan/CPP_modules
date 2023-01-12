@@ -10,6 +10,7 @@
 # include <ctime>
 # include <cstdlib>
 # include <sys/time.h>
+# include <unistd.h>
 
 # define BLACK	"\33[1;30m"
 # define RED	"\33[1;31m"

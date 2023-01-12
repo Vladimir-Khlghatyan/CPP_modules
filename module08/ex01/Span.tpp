@@ -57,14 +57,14 @@ void    Span::addRange(vecIt begin, vecIt end)
 
     std::stringstream msg;
     vecIt   tmp = begin;
-    if (std::distance(begin, end) > 5)
+    if (std::distance(begin, end) > 10)
     {
         while (tmp < end)
         {
             msg << *tmp;
             msg << ", ";
             tmp++;
-            if (tmp - begin == 5)
+            if (tmp - begin == 10)
                 break ;
         }
         msg << "... ";

@@ -47,17 +47,15 @@ int main(void)
     std::cout << PINK << "Size: " << WHITE << string_mstack.size();
     std::cout << PINK  << "    Empty: " << WHITE << (string_mstack.empty() ? "true" : "false") << std::endl;
 
-    
 
 
     std::cout << YELLOW << "\n--- TEST 2 -- (int MutantStack) ------------------------" << RESET << std::endl;
     std::cout << BLACK << "// MutantStack<int> int_mstack;\n" << std::endl;
-    std::cout << BLACK << "// int_mstack.push(\"I\");" << std::endl;
-    std::cout << BLACK << "// int_mstack.push(\"love\");" << std::endl;
-    std::cout << BLACK << "// int_mstack.push(\"Tumo labs\");" << std::endl;
+    std::cout << BLACK << "// int_mstack.push(10);" << std::endl;
+    std::cout << BLACK << "// int_mstack.push(15);" << std::endl;
+    std::cout << BLACK << "// int_mstack.push(-24);" << std::endl;
     std::cout << BLACK << "// int_mstack.pop();" << std::endl;
-    std::cout << BLACK << "// int_mstack.push(\"fourty-two\");" << std::endl;
-    std::cout << BLACK << "// int_mstack.push(\"Yerevan\");\n" << RESET << std::endl;
+    std::cout << BLACK << "// int_mstack.push(42);" << std::endl;
     
 
     MutantStack<int> int_mstack;

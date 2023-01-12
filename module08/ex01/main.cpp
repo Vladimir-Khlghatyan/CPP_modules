@@ -3,15 +3,12 @@
 static void pushRandomNums(std::vector<int> &vec, int size)
 {
     struct  timeval currentTime;
-    int     sign;
     for (int i = 0; i < size; ++i)
     {
         gettimeofday(&currentTime, NULL);
         std::srand(currentTime.tv_usec);
-        sign = 1;
-        if (std::rand() % 2)
-            sign = -1;
-        vec.push_back(std::rand() * sign);
+        vec.push_back(std::rand());
+        usleep(10);
     }
 }
 
