@@ -31,9 +31,74 @@ RPN::~RPN(void)
 
 void RPN::expressionResult(std::string expression)
 {
+    double penultimate;
+    double last;
+
     this->strTrim(expression);
     this->removeUnnecessarySpaces(expression);
-    // std::cout << expression << std::endl;
+    if (expression == "")
+    {
+        std::cerr << RED << "Error: empty argument" << RESET << std::endl;
+        return ;
+    }
+    if (this->checkAllowedSymbols(expression) == -1)
+        return;
+    std::string::iterator it;
+    for (it = expression.begin(); it < expression.end(); ++it)
+    {
+        if (*it == ' ')
+            continue ;
+        if (std::isdigit(*it))
+            _stack.push(static_cast<int>(*it) - '0');
+        else if (_stack.size() >= 2)
+        {
+            last = static_cast<double>(_stack.top());
+            _stack.pop();
+            penultimate = static_cast<double>(_stack.top());
+            _stack.pop();
+            if (*it == '+')
+                last = penultimate + last;
+            else if (*it == '-')
+                last = penultimate - last;
+            else if (*it == '/')
+            {
+                if (last == 0)
+                {
+                    std::cerr << RED << "Error: division by zero." << RESET << std::endl;
+                    while (!_stack.empty())
+                        _stack.pop();
+                    return ;
+                }
+                last = penultimate / last;
+            }
+            else if (*it == '*')
+            {
+                if (last != 0 && penultimate > std::numeric_limits<double>::max() / last)
+                {
+                    std::cerr << RED << "Error: double overflow." << RESET << std::endl;
+                    while (!_stack.empty())
+                        _stack.pop();
+                    return ;
+                }
+                last = penultimate * last;
+            }
+            _stack.push(last);
+        }
+        else
+        {
+            std::cerr << RED << "Error: invalid Polish expression" << RESET << std::endl;
+            while (!_stack.empty())
+                _stack.pop();
+            return ;
+        }
+    }
+    if (it == expression.end() && _stack.size() == 1)
+    {
+        std::cout << _stack.top() << std::endl;
+        while (!_stack.empty())
+            _stack.pop();
+    }
+
 
 }
 
@@ -77,6 +142,22 @@ void RPN::removeUnnecessarySpaces(std::string &str)
 
 int RPN::checkAllowedSymbols(std::string &str)
 {
-    (void)&str;
+    size_t startPosition = str.find_first_not_of(" \f\n\r\t\v0123456789+-/*");
+    if (startPosition != std::string::npos)
+    {
+        std::cerr << RED << "Error: unexpected symbol in the expression." << RESET << std::endl;
+        return -1;
+    }
+    for (std::string::iterator it = str.begin(); it < str.end(); ++it)
+    {
+        if (std::isdigit(*it))
+        {
+            if (it != str.begin() && std::isdigit(*(it - 1)))
+            {
+                std::cerr << RED << "Error: the numbers must be single digits." << RESET << std::endl;
+                return -1;
+            }
+        }
+    }
     return 0;
 }
