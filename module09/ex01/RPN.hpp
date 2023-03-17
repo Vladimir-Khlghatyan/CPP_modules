@@ -19,21 +19,22 @@
 class RPN
 {
 	private:
-      std::stack<long long> _stack;
+      std::stack<double> _stack;
 
-    public:		
+    public:
       RPN(void);						          // Default constructor
       RPN(const RPN &other);			    // Copy constructor
       RPN &operator=(const RPN &rhs);	// Copy assignment operator
       ~RPN(void);						          // Destructor
 
     public:
-      void    expressionResult(std::string expression);
+      int    expressionResult(std::string expression);
 
     private:
       void    strTrim(std::string &str);
       void    removeUnnecessarySpaces(std::string &str);
       int     checkAllowedSymbols(std::string &str);
+      int     errorMsg(const std::string &msg);
 };
 
 #endif

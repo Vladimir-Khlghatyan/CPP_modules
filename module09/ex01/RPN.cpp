@@ -2,59 +2,39 @@
 
 //==== constructors =====================================================================
 
-RPN::RPN(void)
-{
-    // no code needed
-}
-
-RPN::RPN(const RPN &other)
-{
-    (void)&other;
-    // no code needed
-}
-
-RPN &RPN::operator=(const RPN &rhs)
-{
-	if (this != &rhs)
-	{
-		// no code needed
-	}
-	return (*this);
-}
-
-RPN::~RPN(void)
-{
-    // no code needed
-}
+RPN::RPN(void) { }
+RPN::RPN(const RPN &other){ (void)&other; /*no code needed*/ }
+RPN &RPN::operator=(const RPN &rhs) { if (this != &rhs) {/*no code needed*/} return *this; }
+RPN::~RPN(void) { }
 
 //==== member functions =================================================================
 
-void RPN::expressionResult(std::string expression)
+int RPN::expressionResult(std::string expression)
 {
     double penultimate;
     double last;
 
     this->strTrim(expression);
     this->removeUnnecessarySpaces(expression);
+
     if (expression == "")
-    {
-        std::cerr << RED << "Error: empty argument" << RESET << std::endl;
-        return ;
-    }
+        return this->errorMsg("Error: empty argument");
+
     if (this->checkAllowedSymbols(expression) == -1)
-        return;
+        return -1;
+
     std::string::iterator it;
     for (it = expression.begin(); it < expression.end(); ++it)
     {
         if (*it == ' ')
             continue ;
         if (std::isdigit(*it))
-            _stack.push(static_cast<int>(*it) - '0');
+            _stack.push(static_cast<float>(*it) - '0');
         else if (_stack.size() >= 2)
         {
-            last = static_cast<double>(_stack.top());
+            last = _stack.top();
             _stack.pop();
-            penultimate = static_cast<double>(_stack.top());
+            penultimate = _stack.top();
             _stack.pop();
             if (*it == '+')
                 last = penultimate + last;
@@ -63,34 +43,23 @@ void RPN::expressionResult(std::string expression)
             else if (*it == '/')
             {
                 if (last == 0)
-                {
-                    std::cerr << RED << "Error: division by zero." << RESET << std::endl;
-                    while (!_stack.empty())
-                        _stack.pop();
-                    return ;
-                }
+                    return this->errorMsg("Error: division by zero.");
+                if (penultimate < std::numeric_limits<double>::min() * last)
+                    return this->errorMsg("Error: double overflow (~0).");
                 last = penultimate / last;
             }
             else if (*it == '*')
             {
                 if (last != 0 && penultimate > std::numeric_limits<double>::max() / last)
-                {
-                    std::cerr << RED << "Error: double overflow." << RESET << std::endl;
-                    while (!_stack.empty())
-                        _stack.pop();
-                    return ;
-                }
+                    return this->errorMsg("Error: double overflow (inf).");
+                if (last != 0 && penultimate < std::numeric_limits<double>::lowest() / last)
+                    return this->errorMsg("Error: double overflow (-inf).");
                 last = penultimate * last;
             }
             _stack.push(last);
         }
         else
-        {
-            std::cerr << RED << "Error: invalid Polish expression" << RESET << std::endl;
-            while (!_stack.empty())
-                _stack.pop();
-            return ;
-        }
+            return this->errorMsg("Error: incomplite Polish expression");
     }
     if (it == expression.end() && _stack.size() == 1)
     {
@@ -98,8 +67,9 @@ void RPN::expressionResult(std::string expression)
         while (!_stack.empty())
             _stack.pop();
     }
-
-
+    else
+        this->errorMsg("Error: incomplite Polish expression");
+    return 0;
 }
 
 void RPN::strTrim(std::string &str)
@@ -144,20 +114,18 @@ int RPN::checkAllowedSymbols(std::string &str)
 {
     size_t startPosition = str.find_first_not_of(" \f\n\r\t\v0123456789+-/*");
     if (startPosition != std::string::npos)
-    {
-        std::cerr << RED << "Error: unexpected symbol in the expression." << RESET << std::endl;
-        return -1;
-    }
+        return this->errorMsg("Error: unexpected symbol in the expression.");
+
     for (std::string::iterator it = str.begin(); it < str.end(); ++it)
-    {
-        if (std::isdigit(*it))
-        {
-            if (it != str.begin() && std::isdigit(*(it - 1)))
-            {
-                std::cerr << RED << "Error: the numbers must be single digits." << RESET << std::endl;
-                return -1;
-            }
-        }
-    }
+        if (std::isdigit(*it) && it != str.begin() && std::isdigit(*(it - 1)))
+            return this->errorMsg("Error: the numbers must be single digits.");
     return 0;
+}
+
+int RPN::errorMsg(const std::string &msg)
+{
+    std::cerr << RED << msg << RESET << std::endl;
+    while (!_stack.empty())
+        _stack.pop();
+    return -1;
 }
