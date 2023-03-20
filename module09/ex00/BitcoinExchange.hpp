@@ -25,20 +25,23 @@
 class BitcoinExchange
 {
 	private:
-		std::map<std::string, float> _database;
+		std::map<unsigned int, float> _database;
 
 	public:
-		BitcoinExchange(std::ifstream &file);					// Parameterized constructor
+		BitcoinExchange(std::ifstream &databaseFile);			// Parameterized constructor
 		BitcoinExchange(const BitcoinExchange &other);			// Copy constructor
 		BitcoinExchange &operator=(const BitcoinExchange &rhs);	// Copy assignment operator
 		~BitcoinExchange(void);									// Destructor
 
 	public:
-		void printMap(void) const;
+		void	display_values_multiplied_by_the_exchange_rates(std::ifstream &priceFile);
+		void	printMap(void) const;
 
-	private:
-		bool 							is_valid_date(const std::string &dateStr);
+	private:		
+		unsigned int 					is_valid_date(const std::string &dateStr);
 		std::pair<std::string, float>	is_valid_number(const std::string &numStr);
+		unsigned int 					date_to_days_since_era(int year, int month, int day);
+		void    						strTrim(std::string &str);
 };
 
 #endif

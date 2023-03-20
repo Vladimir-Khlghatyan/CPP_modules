@@ -5,30 +5,30 @@ int errorMsg2(void);
 
 int	main(int ac, char **av)
 {
-	std::ifstream	file1;
-	// std::ifstream	file2;
+	std::ifstream	databaseFile;
+	std::ifstream	priceFile;
 	
 	// if (ac != 3)
 	// 	return errorMsg1();
 
 	// open exchange rates database	
-	file1.open(av[ac - 1]);		
-	if (!file1.is_open())
+	databaseFile.open(av[ac - 1]);		
+	if (!databaseFile.is_open())
 		return errorMsg2();
 
 	// open prices/dates file		
-	// file2.open(av[ac - 2]);
-	// if (!file2.is_open())
+	// priceFile.open(av[ac - 2]);
+	// if (!priceFile.is_open())
 	// {
-	// 	file1.close();
+	// 	databaseFile.close();
 	// 	return errorMsg2();
 	// }
 
-	BitcoinExchange btc(file1);
+	BitcoinExchange btc(databaseFile);
 	btc.printMap();
 
-	file1.close();
-	// file2.close();
+	databaseFile.close();
+	// priceFile.close();
 
 	return 0;
 }

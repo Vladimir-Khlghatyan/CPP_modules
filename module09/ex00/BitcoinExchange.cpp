@@ -1,15 +1,15 @@
 #include "BitcoinExchange.hpp"
 
 // ==== constructors ========================================================
-BitcoinExchange::BitcoinExchange(std::ifstream &file)
+BitcoinExchange::BitcoinExchange(std::ifstream &databaseFile)
 {
 	std::string line;
 	std::string date;
 	std::string rate;
-	size_t commaPos;
+	size_t 		commaPos;
 
-	std::getline(file, line); // omitting first line
-	while (std::getline(file, line))
+	std::getline(databaseFile, line); // omitting first line
+	while (std::getline(databaseFile, line))
 	{
 		commaPos = line.find(',');
 		date = line.substr(0, commaPos);
@@ -17,7 +17,7 @@ BitcoinExchange::BitcoinExchange(std::ifstream &file)
 			rate = line.substr(commaPos + 1);
 		else
 			rate = "";
-		if (is_valid_date(date) == false)
+		if (!is_valid_date(date))
 		{
 			_database.clear();
 			std::cout << RED << "[Rates DB] Error: bad input => ";
@@ -31,13 +31,13 @@ BitcoinExchange::BitcoinExchange(std::ifstream &file)
 			std::cout << RED << "[Rates DB] " << is_valid_number(rate).first << std::endl;
 			return ;
 		}
-		_database[date] = is_valid_number(rate).second;
+		_database[is_valid_date(date)] = is_valid_number(rate).second;
 	}
 }
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange &other)
 {
-	for (std::map<std::string, float>::const_iterator it = other._database.begin(); \
+	for (std::map<unsigned int, float>::const_iterator it = other._database.begin(); \
 														it != other._database.end(); ++it)
 			this->_database[it->first] = it->second;
 }
@@ -47,7 +47,7 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &rhs)
 	if (this != &rhs)
 	{
 		this->_database.clear();
-		for (std::map<std::string, float>::const_iterator it = rhs._database.begin(); \
+		for (std::map<unsigned int, float>::const_iterator it = rhs._database.begin(); \
 														it != rhs._database.end(); ++it)
 			this->_database[it->first] = it->second;
 	}
@@ -61,16 +61,48 @@ BitcoinExchange::~BitcoinExchange(void)
 
 // ==== member functions =====================================================
 
-bool	BitcoinExchange::is_valid_date(const std::string &dateStr)
+void 	BitcoinExchange::display_values_multiplied_by_the_exchange_rates(std::ifstream &priceFile)
+{
+	if (_database.empty())
+		return ;
+
+	std::string line;
+	std::string date;
+	std::string value;
+	size_t 		pipePos;
+
+	std::getline(priceFile, line); // omitting first line
+	while (std::getline(priceFile, line))
+	{
+		pipePos = line.find('|');
+		date = line.substr(0, pipePos);
+		this->strTrim(date);
+		if (pipePos != std::string::npos)
+			value = line.substr(pipePos + 1);
+		else
+			value = "";
+		this->strTrim(value);
+	}
+	// need to continue code here
+}
+
+void 	BitcoinExchange::printMap(void) const
+{
+	for (std::map<unsigned int, float>::const_iterator it = _database.begin(); \
+														it != _database.end(); ++it)
+			std::cout << it->first << " " << it->second << std::endl;
+}
+
+unsigned int	BitcoinExchange::is_valid_date(const std::string &dateStr)
 {
 	//A valid date will always be in the following format: yyyy-mm-dd
 	if (dateStr.length() != 10)
-		return false;
+		return 0;
 	size_t notAllowedSymbolPosition = dateStr.find_first_not_of("-0123456789");
 	if (notAllowedSymbolPosition != std::string::npos)
-        return false;
+        return 0;
 	if (dateStr[4] != '-' || dateStr[7] != '-')
-		return false;
+		return 0;
 
 	std::string yearStr = dateStr.substr(0, 4);
 	std::string monthStr = dateStr.substr(5, 2);
@@ -89,7 +121,7 @@ bool	BitcoinExchange::is_valid_date(const std::string &dateStr)
 	dayIss >> day;
 
 	if (year < 1 || month < 1 || month > 12 || day < 1 || day > 31)
-		return false;
+		return 0;
 
 	// In the Julian calendar (untill 1582), a leap year occurs every 4 years.
 	// Under the Gregorian calendar (was introduced by Pope Gregory XIII in 1582),
@@ -118,8 +150,8 @@ bool	BitcoinExchange::is_valid_date(const std::string &dateStr)
 		daysInMonth = 31;
 
 	if (day > daysInMonth)
-		return false;
-	return true;
+		return 0;
+	return date_to_days_since_era(year, month, day);
 }
 
 std::pair<std::string, float>	BitcoinExchange::is_valid_number(const std::string &numStr)
@@ -210,9 +242,52 @@ std::pair<std::string, float>	BitcoinExchange::is_valid_number(const std::string
 	return std::make_pair("ok", value);
 }
 
-void 	BitcoinExchange::printMap(void) const
+unsigned int	BitcoinExchange::date_to_days_since_era(int year, int month, int day)
 {
-	for (std::map<std::string, float>::const_iterator it = _database.begin(); \
-														it != _database.end(); ++it)
-			std::cout << it->first << " " << it->second << std::endl;
+    // Number of days in February, taking into account leap years
+	int feb;
+	if (year < 1582)
+		feb = 28 + (year % 4 == 0);
+	else
+		feb = 28 + ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0);
+
+	// Number of days in each month
+    int months[12] = {31, feb, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+    // Cumulative number of days in each month
+    int cumulDays = 0;
+    for (int i = 0; i < month - 1; i++)
+        cumulDays += months[i];
+
+    // Calculate the number of days since the beginning of the year
+    int daysSinceJan1 = cumulDays + day;
+
+    // Calculate the number of leap years since the beginning of the era (January 1, 1 AD)
+	unsigned int leapYearsSinceEra = 0;
+	for (int i = 1; i < year; ++i)
+	{
+		if (year < 1582)
+			leapYearsSinceEra += (i % 4 == 0);
+		else
+			leapYearsSinceEra += ((i % 4 == 0 && i % 100 != 0) || i % 400 == 0);
+	}
+
+	// Calculate the number of days since the beginning of the era (January 1, 1 AD)
+    unsigned int daysSinceEra = leapYearsSinceEra + 365 * (year - 1) + daysSinceJan1;
+
+    return daysSinceEra;
+}
+
+void BitcoinExchange::strTrim(std::string &str)
+{
+    size_t startPosition = str.find_first_not_of(" \f\n\r\t\v");
+    if (startPosition != std::string::npos)
+        str.erase(0, startPosition);
+
+    size_t endPosition = str.find_last_not_of(" \f\n\r\t\v");
+    if (endPosition != std::string::npos)
+        str.erase(endPosition + 1);
+
+    if (startPosition == std::string::npos && endPosition == std::string::npos)
+        str.clear();
 }
