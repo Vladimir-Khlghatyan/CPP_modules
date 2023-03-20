@@ -1,16 +1,17 @@
 #ifndef BITCOINEXCHANGE_HPP
 # define BITCOINEXCHANGE_HPP
 
-#include <iostream>
-#include <map>
-#include <fstream>
-#include <sstream>
-#include <string>
+# include <iostream>
+# include <map>
+# include <fstream>
+# include <sstream>
+# include <string>
+# include <algorithm>
 
-#include <cmath>
-#include <ctime>
-#include <cstdlib>
-#include <climits>
+# include <cmath>
+# include <ctime>
+# include <cstdlib>
+# include <climits>
 
 # define RED	"\33[1;31m"
 # define GREEN	"\33[1;32m"
@@ -33,8 +34,9 @@ class BitcoinExchange
 		~BitcoinExchange(void);									// Destructor
 
 	public:
+		void printMap(void) const;
 
-	// private:
+	private:
 		bool 							is_valid_date(const std::string &dateStr);
 		std::pair<std::string, float>	is_valid_number(const std::string &numStr);
 };
