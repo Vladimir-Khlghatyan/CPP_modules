@@ -2,11 +2,15 @@
 # define BITCOINEXCHANGE_HPP
 
 #include <iostream>
+#include <map>
 #include <fstream>
 #include <sstream>
 #include <string>
+
+#include <cmath>
 #include <ctime>
-#include <map>
+#include <cstdlib>
+#include <climits>
 
 # define RED	"\33[1;31m"
 # define GREEN	"\33[1;32m"
@@ -20,18 +24,19 @@
 class BitcoinExchange
 {
 	private:
-		const std::map<std::string, float> database;
+		std::map<std::string, float> _database;
 
 	public:
-		BitcoinExchange(const std::string &databasePath);		// Parameterized constructor
+		BitcoinExchange(std::ifstream &file);					// Parameterized constructor
 		BitcoinExchange(const BitcoinExchange &other);			// Copy constructor
 		BitcoinExchange &operator=(const BitcoinExchange &rhs);	// Copy assignment operator
 		~BitcoinExchange(void);									// Destructor
 
 	public:
 
-	private:
-		bool is_valid_date(const std::string &dateStr);
+	// private:
+		bool 							is_valid_date(const std::string &dateStr);
+		std::pair<std::string, float>	is_valid_number(const std::string &numStr);
 };
 
 #endif

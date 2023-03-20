@@ -1,32 +1,38 @@
 #include "BitcoinExchange.hpp"
 
 // ==== constructors ========================================================
-BitcoinExchange::BitcoinExchange(const std::string &databasePath)
+BitcoinExchange::BitcoinExchange(std::ifstream &file)
 {
-	(void)&databasePath; //tmp
-	// write code here
-	std::cout << " " << std::endl;
+	std::string line;
+	while (std::getline(file, line))
+	{
+
+	}
+
+		std::cout << " " << std::endl;
 }
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange &other)
 {
-	(void)&other; //tmp
-	// write code here
+	for (std::map<std::string, float>::const_iterator it = other._database.begin(); \
+														it != other._database.end(); ++it)
+			this->_database[it->first] = it->second;
 }
 
 BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &rhs)
 {
 	if (this != &rhs)
 	{
-		// write code here
+		this->_database.clear();
+		for (std::map<std::string, float>::const_iterator it = rhs._database.begin(); \
+														it != rhs._database.end(); ++it)
+			this->_database[it->first] = it->second;
 	}
-	
 	return (*this);
 }
 
 BitcoinExchange::~BitcoinExchange(void)
 {
-	// write code here
 }
 
 
@@ -90,6 +96,19 @@ bool	BitcoinExchange::is_valid_date(const std::string &dateStr)
 
 	if (day > daysInMonth)
 		return false;
-	std::cout << year << " " << month << " " << day << std::endl;
 	return true;
+}
+
+std::pair<std::string, float>	BitcoinExchange::is_valid_number(const std::string &numStr)
+{
+	if (numStr == "")
+		return std::make_pair("\33[1;31mError: empty exchange rate in database.\33[0;m", 0.0);
+	// size_t notAllowedSymbolPosition = dateStr.find_first_not_of("-0123456789");
+
+
+
+
+
+	std::pair<std::string, int> myPair("ok", 2.0);
+	return myPair;
 }
