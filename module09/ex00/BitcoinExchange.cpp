@@ -66,31 +66,56 @@ void 	BitcoinExchange::display_values_multiplied_by_the_exchange_rates(std::ifst
 	if (_database.empty())
 		return ;
 
-	std::string line;
-	std::string date;
-	std::string value;
-	size_t 		pipePos;
+	std::string 	line;
+	std::string 	date;
+	std::string 	value;
+	size_t 			pipePos;
+	unsigned int	dateInDays;
 
 	std::getline(priceFile, line); // omitting first line
 	while (std::getline(priceFile, line))
 	{
 		pipePos = line.find('|');
 		date = line.substr(0, pipePos);
-		this->strTrim(date);
+		value = "";
 		if (pipePos != std::string::npos)
 			value = line.substr(pipePos + 1);
-		else
-			value = "";
+		this->strTrim(date);	
 		this->strTrim(value);
+		dateInDays = is_valid_date(date);
+		if (dateInDays)
+		{
+			std::map<unsigned int, float>::iterator it = _database.find(dateInDays);
+			while (--dateInDays && it == _database.end())
+				it = _database.find(dateInDays);
+			if (it == _database.end())
+				std::cout << RED << "Error: date not found in database => " << YELLOW << date << RESET << std::endl;
+			else
+			{
+				if (is_valid_number(value).first != "ok")
+				{
+					if (value == "")
+					{
+						std::cout << is_valid_number(value).first;
+						std::cout << YELLOW << line.substr(0, line.length() - 1);
+						std::cout << "..." << RESET << std::endl;
+					}
+					else
+						std::cout << is_valid_number(value).first << std::endl;
+				}
+				else if (is_valid_number(value).second > 1000)
+					std::cout << RED << "Error: price is greater than 1000 => " << YELLOW << value << RESET << std::endl;
+				else
+				{
+					std::cout << GREEN << date << " => ";
+					std::cout << std::setw(6) << is_valid_number(value).second << " = ";
+					std::cout << is_valid_number(value).second * (*it).second << RESET << std::endl;
+				}
+			}
+		}
+		else
+			std::cout << RED << "Error: bad input => " << YELLOW << date << RESET << std::endl;
 	}
-	// need to continue code here
-}
-
-void 	BitcoinExchange::printMap(void) const
-{
-	for (std::map<unsigned int, float>::const_iterator it = _database.begin(); \
-														it != _database.end(); ++it)
-			std::cout << it->first << " " << it->second << std::endl;
 }
 
 unsigned int	BitcoinExchange::is_valid_date(const std::string &dateStr)
@@ -159,7 +184,7 @@ std::pair<std::string, float>	BitcoinExchange::is_valid_number(const std::string
 	std::string msg;
 	
 	if (numStr == "" || numStr == "-" || numStr == "+")
-		return std::make_pair("\33[1;31mError: missing number.\33[0;m", 0.0);
+		return std::make_pair("\33[1;31mError: missing value => \33[0;m", 0.0);
 
 	// checking if "numStr" represents an integer
 	size_t notNumPos = numStr.find_first_not_of("0123456789");
@@ -175,8 +200,7 @@ std::pair<std::string, float>	BitcoinExchange::is_valid_number(const std::string
 			msg = RED;
 			msg += "Error: too small a number => ";
 			msg += YELLOW;
-			msg += numStr;
-			msg += RESET;
+			msg += numStr + RESET;
 			return std::make_pair(msg, 0.0);
 		}
 		if (num < 0)
@@ -184,8 +208,7 @@ std::pair<std::string, float>	BitcoinExchange::is_valid_number(const std::string
         	msg = RED;
 			msg += "Error: not a positive number? => ";
 			msg += YELLOW;
-			msg += numStr;
-			msg += RESET;
+			msg += numStr + RESET;
 			return std::make_pair(msg, 0.0);
 		}
 		if (num > INT_MAX)
@@ -193,8 +216,7 @@ std::pair<std::string, float>	BitcoinExchange::is_valid_number(const std::string
 			msg = RED;
 			msg += "Error: too large a number => ";
 			msg += YELLOW;
-			msg += numStr;
-			msg += RESET;
+			msg += numStr + RESET;
 			return std::make_pair(msg, 0.0);
 		}
 		return std::make_pair("ok", static_cast<float>(num));
@@ -208,8 +230,7 @@ std::pair<std::string, float>	BitcoinExchange::is_valid_number(const std::string
 		msg = RED;
 		msg += "Error: not valid a number => ";
 		msg += YELLOW;
-		msg += numStr;
-		msg += RESET;
+		msg += numStr + RESET;
 		return std::make_pair(msg, 0.0);
 	}
 	if (value == -HUGE_VALF)
@@ -217,8 +238,7 @@ std::pair<std::string, float>	BitcoinExchange::is_valid_number(const std::string
 		msg = RED;
 		msg += "Error: too small a number (-inf) => ";
 		msg += YELLOW;
-		msg += numStr;
-		msg += RESET;
+		msg += numStr + RESET;
 		return std::make_pair(msg, 0.0);
 	}
 	if (value < 0)
@@ -226,8 +246,7 @@ std::pair<std::string, float>	BitcoinExchange::is_valid_number(const std::string
 		msg = RED;
 		msg += "Error: not a positive number => ";
 		msg += YELLOW;
-		msg += numStr;
-		msg += RESET;
+		msg += numStr + RESET;
 		return std::make_pair(msg, 0.0);
 	}
 	if (value == HUGE_VALF)
@@ -235,8 +254,7 @@ std::pair<std::string, float>	BitcoinExchange::is_valid_number(const std::string
 		msg = RED;
 		msg += "Error: too large a number (inf) => ";
 		msg += YELLOW;
-		msg += numStr;
-		msg += RESET;
+		msg += numStr + RESET;
 		return std::make_pair(msg, 0.0);
 	}
 	return std::make_pair("ok", value);
