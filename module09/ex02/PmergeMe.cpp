@@ -64,7 +64,7 @@ void	PmergeMe::vectorPrint(void) const
 void 	PmergeMe::vectorInsertionSort(int start, int end)
 {
 	int	i, j, tmp;
-	for (i = start + 1; i < end; ++i)
+	for (i = start + 1; i <= end; ++i)
 	{
 		tmp = _vector[i];
 		j = i;
@@ -88,36 +88,19 @@ void PmergeMe::vectorMerge(int start, int end)
     while (i <= mid && j <= end)
     {
         if (_vector[i] < _vector[j])
-		{
-            std::cout << __LINE__ << ": " << _vector[i] << "\n";
 			tmpVec[k++] = _vector[i++];
-		}
         else
-		{
-            std::cout << __LINE__ << ": " << _vector[j] << " j=" << j << " vecSize: " << _vector.size() << "\n";
 			tmpVec[k++] = _vector[j++];
-		}
     }
 
     while (i <= mid)
-	{
-        std::cout << __LINE__ << ": " << _vector[i] << "\n";
 		tmpVec[k++] = _vector[i++];
-	}
 
     while (j <= end)
-	{
-        std::cout << __LINE__ << ": " << _vector[j] << "\n";
 		tmpVec[k++] = _vector[j++];
-	}
 
     for (int i = 0; i < k; i++)
-	{
         _vector[start + i] = tmpVec[i];
-		std::cout << __LINE__ << ": " << tmpVec[i];
-		std::cout << "  start: " << start << "  end: " << end << "\n";
-
-	}
 }
 
 void	PmergeMe::vectorMergeInsertionSort(int start, int end)
@@ -131,6 +114,35 @@ void	PmergeMe::vectorMergeInsertionSort(int start, int end)
     vectorMergeInsertionSort(start, (start + end) / 2);
     vectorMergeInsertionSort((start + end) / 2 + 1, end);
     vectorMerge(start, end);
+}
+
+void	PmergeMe::vectorCheckIfSorted(void)
+{
+	if (_vector.empty() == true)
+	{
+		std::cout << PINK << "Vector is empty." << RESET << std::endl;
+		return ;
+	}
+	std::vector<int>::const_iterator itTmp;
+	for (std::vector<int>::const_iterator it = _vector.begin(); it != _vector.end(); ++it)
+	{
+		itTmp = it;
+		std::advance(itTmp, 1);
+		if (itTmp != _vector.end())
+		{
+			if (*it > *itTmp)
+			{
+				std::cout << PINK << "Vector is not sorted." << RESET << std::endl;
+				return ;
+			}
+		}
+	}
+	std::cout << PINK << "Vector is sorted." << RESET << std::endl;
+}
+
+int	PmergeMe::getVectorSize() const
+{
+	return _vector.size();
 }
 
 // ==== member functions (list part) =========================================
@@ -156,7 +168,7 @@ void 	PmergeMe::listInsertionSort(int start, int end)
   std::advance(itStart, start); // advance "itStart" by "start" count position forward
   std::advance(it, start + 1); // advance "it" by "start + 1" count position forward
 
-  for (i = start + 1; i < end; ++i)
+  for (i = start + 1; i <= end; ++i)
   {
 	tmp = *it;
 	jt = it;
@@ -213,6 +225,48 @@ void PmergeMe::listMerge(int start, int end)
         *leftIt++ = *tmpIt++;
 }
 
+void	PmergeMe::listMergeInsertionSort(int start, int end)
+{
+    if (end - start < _listThreshold)
+	{
+		listInsertionSort(start, end);
+		return;
+    }
+
+    listMergeInsertionSort(start, (start + end) / 2);
+    listMergeInsertionSort((start + end) / 2 + 1, end);
+    listMerge(start, end);
+}
+
+void	PmergeMe::listCheckIfSorted(void)
+{
+	if (_list.empty() == true)
+	{
+		std::cout << PINK << "List is empty." << RESET << std::endl;
+		return ;
+	}
+	std::list<int>::const_iterator itTmp;
+	for (std::list<int>::const_iterator it = _list.begin(); it != _list.end(); ++it)
+	{
+		itTmp = it;
+		std::advance(itTmp, 1);
+		if (itTmp != _list.end())
+		{
+			if (*it > *itTmp)
+			{
+				std::cout << PINK << "List is not sorted." << RESET << std::endl;
+				return ;
+			}
+		}
+	}
+	std::cout << PINK << "List is sorted." << RESET << std::endl;
+}
+
+int	PmergeMe::getListSize() const
+{
+	return _list.size();
+}
+
 // ==== member functions (others) ============================================
 
 void	PmergeMe::fillDataBases(std::string &numbers)
@@ -246,15 +300,3 @@ void	PmergeMe::fillDataBases(std::string &numbers)
 	}
 }
 
-void	PmergeMe::listMergeInsertionSort(int start, int end)
-{
-    if (end - start < _listThreshold)
-	{
-		listInsertionSort(start, end);
-		return;
-    }
-
-    listMergeInsertionSort(start, (start + end) / 2);
-    listMergeInsertionSort((start + end) / 2 + 1, end);
-    listMerge(start, end);
-}

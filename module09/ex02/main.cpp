@@ -13,15 +13,23 @@ int	main(int ac, char **av)
 
 	PmergeMe pmm(numbers);
 
-	pmm.vectorPrint();
+	std::cout << "\nAFTER SORTING\n";
+	// pmm.vectorPrint();
+	pmm.vectorCheckIfSorted();
 	// pmm.listPrint();
+	pmm.listCheckIfSorted();
 
-	pmm.vectorMergeInsertionSort(0, ac - 2);
-	// pmm.listMergeInsertionSort(0, ac - 2);
+	pmm.vectorMergeInsertionSort(0, pmm.getVectorSize() - 1);
+	pmm.listMergeInsertionSort(0, pmm.getListSize() - 1);
 
-	pmm.vectorPrint();
+	std::cout << "\nBEFORE SORTING\n";
+	// pmm.vectorPrint();
+	pmm.vectorCheckIfSorted();
 	// pmm.listPrint();
+	pmm.listCheckIfSorted();
+
 	return 0;
 }
 
-// ./PmergeMe 100 99 98 97 96 95 94 93 92 91 90 89 88 87 86 85 84 83 82 81 80 79 78 77 76 75 74 73 72 71 70
+// ARG=$(ruby -e "puts (1..100).to_a.shuffle.join(' ')"); ./PmergeMe $ARG
+// ./PmergeMe `shuf -i 1-100000 -n 3000 | tr "\n" " "`
