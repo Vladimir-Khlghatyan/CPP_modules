@@ -13,7 +13,13 @@ int	main(int ac, char **av)
 
 	PmergeMe pmm(numbers);
 
-	pmm.printVector();
-	pmm.printList();
+	pmm.vectorPrint();
+	pmm.listPrint();
+
+	pmm.vectorMergeInsertionSort(0, ac - 1);
+	pmm.listInsertionSort(0, ac - 1);	
+
+	pmm.vectorPrint();
+	pmm.listPrint();
 	return 0;
 }

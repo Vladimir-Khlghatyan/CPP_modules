@@ -3,9 +3,7 @@
 // ==== constructors ========================================================
 BitcoinExchange::BitcoinExchange(std::ifstream &databaseFile)
 {
-	std::string line;
-	std::string date;
-	std::string rate;
+	std::string line, date, rate;
 	size_t 		commaPos;
 
 	std::getline(databaseFile, line); // omitting first line
@@ -58,7 +56,6 @@ BitcoinExchange::~BitcoinExchange(void)
 {
 }
 
-
 // ==== member functions =====================================================
 
 void 	BitcoinExchange::display_values_multiplied_by_the_exchange_rates(std::ifstream &priceFile)
@@ -66,11 +63,8 @@ void 	BitcoinExchange::display_values_multiplied_by_the_exchange_rates(std::ifst
 	if (_database.empty())
 		return ;
 
-	std::string 	line;
-	std::string 	date;
-	std::string 	value;
-	size_t 			pipePos;
-	unsigned int	dateInDays;
+	std::string	line, date, value;
+	size_t 		pipePos, dateInDays;
 
 	std::getline(priceFile, line); // omitting first line
 	while (std::getline(priceFile, line))

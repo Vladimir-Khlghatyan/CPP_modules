@@ -1,7 +1,7 @@
 #include "PmergeMe.hpp"
 
 // ==== constructors ========================================================
-PmergeMe::PmergeMe(const std::string &numbers)
+PmergeMe::PmergeMe(const std::string &numbers) : _vectorThreshold(10), _listThreshold(10)
 {
 	std::string non_const_numbers = numbers;
 	try {
@@ -14,6 +14,8 @@ PmergeMe::PmergeMe(const std::string &numbers)
 PmergeMe::PmergeMe(const PmergeMe &other)
 {
 	int i = 0;
+	_vectorThreshold = other._vectorThreshold;
+	_listThreshold = other._listThreshold;
 	_vector.reserve(other._vector.size());
 	for (std::list<int>::const_iterator it = other._list.begin(); it != other._list.end(); ++it)
 	{
@@ -27,6 +29,8 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &rhs)
 	if (this != &rhs)
 	{
 		int i = 0;
+		_vectorThreshold = rhs._vectorThreshold;
+		_listThreshold = rhs._listThreshold;
 		_vector.clear();
 		_list.clear();
 		_vector.reserve(rhs._vector.size());
@@ -43,10 +47,9 @@ PmergeMe::~PmergeMe(void)
 {
 }
 
+// ==== member functions (vector part) =======================================
 
-// ==== member functions =====================================================
-
-void	PmergeMe::printVector(void) const
+void	PmergeMe::vectorPrint(void) const
 {
 	if (_vector.empty() == true)
 		return ;
@@ -58,7 +61,65 @@ void	PmergeMe::printVector(void) const
 	std::cout << std::endl;
 }
 
-void	PmergeMe::printList(void) const
+void 	PmergeMe::vectorInsertionSort(int start, int end)
+{
+	int	i, j, tmp;
+	for (i = start + 1; i < end; ++i)
+	{
+		tmp = _vector[i];
+		j = i;
+		while (j > start && _vector[j - 1] > tmp)
+		{
+			_vector[j] = _vector[j - 1];
+			--j;
+		}
+		_vector[j] = tmp;
+  }
+}
+
+void PmergeMe::vectorMerge(int start, int end)
+{
+    int 				mid = (start + end) / 2;
+    int 				i = start;
+    int 				j = mid + 1;
+    int 				k = 0;
+    std::vector<int>    tmpVec(end - start + 1);
+
+    while (i <= mid && j <= end)
+    {
+        if (_vector[i] < _vector[j])
+            tmpVec[k++] = _vector[i++];
+        else
+            tmpVec[k++] = _vector[j++];
+    }
+
+    while (i <= mid)
+        tmpVec[k++] = _vector[i++];
+
+    while (j <= end)
+        tmpVec[k++] = _vector[j++];
+    
+    for (int i = 0; i < k; i++) {
+        _vector[start + i] = tmpVec[i];
+    }
+}
+
+void	PmergeMe::vectorMergeInsertionSort(int start, int end)
+{
+    if (end - start < _vectorThreshold)
+	{
+		vectorInsertionSort(start, end);
+		return;
+    }
+
+    vectorMergeInsertionSort(start, (start + end) / 2);
+    vectorMergeInsertionSort((start + end) / 2 + 1, end);
+    vectorMerge(start, end);
+}
+
+// ==== member functions (list part) =========================================
+
+void	PmergeMe::listPrint(void) const
 {
 	if (_list.empty() == true)
 		return ;
@@ -69,6 +130,33 @@ void	PmergeMe::printList(void) const
 		std::cout << " " << *it;
 	std::cout << std::endl;
 }
+
+void 	PmergeMe::listInsertionSort(int start, int end)
+{
+  std::list<int>::iterator itStart, it, jt, tt;
+  int i, tmp;
+
+  itStart = it = _list.begin();
+  std::advance(itStart, start); // advance "itStart" by "start" count position forward
+  std::advance(it, start + 1); // advance "it" by "start + 1" count position forward
+  
+  for (i = start + 1; i < end; ++i)
+  {
+	tmp = *it;
+	jt = it;
+	while (jt != itStart  && *(--jt) > tmp)
+	{
+		tt = jt;
+		++jt;
+		*jt = *tt;
+		--jt;
+	}
+	*jt = tmp;
+	++it;
+  }
+}
+
+// ==== member functions (others) ============================================
 
 void	PmergeMe::fillDataBases(std::string &numbers)
 {

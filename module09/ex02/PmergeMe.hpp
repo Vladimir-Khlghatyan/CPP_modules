@@ -25,19 +25,33 @@ class  PmergeMe
 	private:
 		std::vector<int>	_vector;
 		std::list<int>		_list;
+		int		 			_vectorThreshold;
+		int 				_listThreshold;
 
 	public:
-		 PmergeMe(const std::string &numbers);			// Parameterized constructor
-		 PmergeMe(const  PmergeMe &other);			// Copy constructor
-		 PmergeMe &operator=(const  PmergeMe &rhs);	// Copy assignment operator
+		PmergeMe(const std::string &numbers);		// Parameterized constructor
+		PmergeMe(const  PmergeMe &other);			// Copy constructor
+		PmergeMe &operator=(const  PmergeMe &rhs);	// Copy assignment operator
 		~ PmergeMe(void);							// Destructor
 
 	public:
-		void	printVector(void) const;
-		void	printList(void) const;
+		void	vectorPrint(void) const;
+		void	vectorMergeInsertionSort(int start, int end);
+
+		void	listPrint(void) const;
+		void	listMergeInsertionSort(int start, int end); // add implementation		
 
 	private:
 		void	fillDataBases(std::string &numbers);
+
+		void 	listInsertionSort(int start, int end);
+		void 	listMerge(int start, int end); // add implementation
+
+		void 	vectorInsertionSort(int start, int end);
+		void 	vectorMerge(int start, int end);
+
 };
 
 #endif
+
+// https://iq.opengenus.org/merge-insertion-sort/
