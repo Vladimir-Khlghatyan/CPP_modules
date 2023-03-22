@@ -29,13 +29,14 @@ class  PmergeMe
 		int 				_listThreshold;
 
 	public:
+		PmergeMe(void);								// Default constructor
 		PmergeMe(const std::string &numbers);		// Parameterized constructor
 		PmergeMe(const  PmergeMe &other);			// Copy constructor
 		PmergeMe &operator=(const  PmergeMe &rhs);	// Copy assignment operator
 		~ PmergeMe(void);							// Destructor
 
 	public:
-		void	vectorPrint(void) const;
+		void	vectorPrint(unsigned int printCount) const;
 		void	vectorMergeInsertionSort(int start, int end);
 		void	vectorCheckIfSorted(void);
 

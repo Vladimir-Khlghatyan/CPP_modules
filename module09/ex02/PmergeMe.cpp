@@ -1,13 +1,15 @@
 #include "PmergeMe.hpp"
 
 // ==== constructors ========================================================
+PmergeMe::PmergeMe(void) : _vectorThreshold(10), _listThreshold(10) { }
+
 PmergeMe::PmergeMe(const std::string &numbers) : _vectorThreshold(10), _listThreshold(10)
 {
 	std::string non_const_numbers = numbers;
 	try {
 		this->fillDataBases(non_const_numbers);
 	} catch (const std::exception &e) {
-		std::cout << RED << e.what() << RESET << std::endl;
+		throw std::runtime_error("Error: invalid argument(s).");
 	}
 }
 
@@ -49,16 +51,26 @@ PmergeMe::~PmergeMe(void)
 
 // ==== member functions (vector part) =======================================
 
-void	PmergeMe::vectorPrint(void) const
+void	PmergeMe::vectorPrint(unsigned int printCount) const
 {
-	if (_vector.empty() == true)
+	if (_vector.empty() == true || printCount == 0)
 		return ;
 	std::vector<int>::const_iterator it = _vector.begin();
-	std::cout << *it;
+	std::cout << YELLOW << *it;
 	it++;
-	for (; it != _vector.end(); ++it)
+	for (; it != _vector.end() && --printCount; ++it)
 		std::cout << " " << *it;
-	std::cout << std::endl;
+	if (it != _vector.end())
+	{
+		std::vector<int>::const_iterator it2 = _vector.end();
+		if (it2 - it > 2)
+			std::cout << PINK << " [...]" << YELLOW;		
+		for (int i = 0; (i < 2) && (it2 > it); ++i)
+			it2--;
+		for (; it2 != _vector.end(); ++it2)
+			std::cout << " " << *it2;
+	}
+	std::cout << RESET << std::endl;
 }
 
 void 	PmergeMe::vectorInsertionSort(int start, int end)

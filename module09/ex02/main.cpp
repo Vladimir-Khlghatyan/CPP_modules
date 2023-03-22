@@ -11,10 +11,18 @@ int	main(int ac, char **av)
 			numbers += " ";
 	}
 
-	PmergeMe pmm(numbers);
+	PmergeMe pmm;
+	
+	try {
+		pmm = PmergeMe(numbers);
+	} catch (const std::exception &e) {
+		std::cout << RED << e.what() << RESET << std::endl;
+		return 1;
+	}
+	
 
 	std::cout << "\nAFTER SORTING\n";
-	// pmm.vectorPrint();
+	pmm.vectorPrint(10);
 	pmm.vectorCheckIfSorted();
 	// pmm.listPrint();
 	pmm.listCheckIfSorted();
