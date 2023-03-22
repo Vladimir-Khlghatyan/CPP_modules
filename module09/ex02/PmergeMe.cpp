@@ -156,6 +156,47 @@ void 	PmergeMe::listInsertionSort(int start, int end)
   }
 }
 
+// void PmergeMe::listMerge(int start, int end)
+// {
+//     std::list<int>::iterator midIt = _list.begin();
+// 	std::advance(midIt, (start + end) / 2); // advance "midIt" by "(start + end) / 2" count position forward
+
+// 	std::list<int>::iterator leftIt = _list.begin();
+//     std::advance(leftIt, start); // advance "leftIt" by "start" count position forward
+
+//     std::list<int>::iterator rightIt = midIt;
+//     std::advance(rightIt, 1); // advance "rightIt" by 1 position forward
+
+// 	std::list<int>::iterator endIt = _list.begin();
+//     std::advance(leftIt, end); // advance "endIt" by "end" count position forward
+
+//     std::list<int> tmpList;
+
+//     while (leftIt <= midIt && rightIt <= endIt)
+//     {
+//         if (*leftIt < *rightIt)
+//             tmpList.push_back(*leftIt++);
+//         else
+//             tmpList.push_back(*rightIt++);
+//     }
+
+//     while (leftIt <= midIt)
+//         tmpList.push_back(*leftIt++);
+
+//     while (rightIt <= endIt)
+//         tmpList.push_back(*rightIt++);
+
+//     leftIt = _list.begin();
+//     std::advance(leftIt, start);
+
+//     std::list<int>::iterator tmpIt = tmpList.begin();
+//     while (leftIt <= midIt)
+//         *leftIt++ = *tmpIt++;
+
+//     while (tmpIt != tmpList.end())
+//         _list.insert(leftIt, *tmpIt++);
+// }
+
 // ==== member functions (others) ============================================
 
 void	PmergeMe::fillDataBases(std::string &numbers)
