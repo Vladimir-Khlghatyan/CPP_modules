@@ -38,7 +38,7 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &rhs)
 		{
 			_list.push_back(*it);
 			_vector.push_back(rhs._vector[i++]);
-		}		
+		}
 	}
 	return (*this);
 }
@@ -74,7 +74,7 @@ void 	PmergeMe::vectorInsertionSort(int start, int end)
 			--j;
 		}
 		_vector[j] = tmp;
-  }
+	}
 }
 
 void PmergeMe::vectorMerge(int start, int end)
@@ -88,20 +88,36 @@ void PmergeMe::vectorMerge(int start, int end)
     while (i <= mid && j <= end)
     {
         if (_vector[i] < _vector[j])
-            tmpVec[k++] = _vector[i++];
+		{
+            std::cout << __LINE__ << ": " << _vector[i] << "\n";
+			tmpVec[k++] = _vector[i++];
+		}
         else
-            tmpVec[k++] = _vector[j++];
+		{
+            std::cout << __LINE__ << ": " << _vector[j] << " j=" << j << " vecSize: " << _vector.size() << "\n";
+			tmpVec[k++] = _vector[j++];
+		}
     }
 
     while (i <= mid)
-        tmpVec[k++] = _vector[i++];
+	{
+        std::cout << __LINE__ << ": " << _vector[i] << "\n";
+		tmpVec[k++] = _vector[i++];
+	}
 
     while (j <= end)
-        tmpVec[k++] = _vector[j++];
-    
-    for (int i = 0; i < k; i++) {
+	{
+        std::cout << __LINE__ << ": " << _vector[j] << "\n";
+		tmpVec[k++] = _vector[j++];
+	}
+
+    for (int i = 0; i < k; i++)
+	{
         _vector[start + i] = tmpVec[i];
-    }
+		std::cout << __LINE__ << ": " << tmpVec[i];
+		std::cout << "  start: " << start << "  end: " << end << "\n";
+
+	}
 }
 
 void	PmergeMe::vectorMergeInsertionSort(int start, int end)
@@ -139,7 +155,7 @@ void 	PmergeMe::listInsertionSort(int start, int end)
   itStart = it = _list.begin();
   std::advance(itStart, start); // advance "itStart" by "start" count position forward
   std::advance(it, start + 1); // advance "it" by "start + 1" count position forward
-  
+
   for (i = start + 1; i < end; ++i)
   {
 	tmp = *it;
@@ -156,53 +172,53 @@ void 	PmergeMe::listInsertionSort(int start, int end)
   }
 }
 
-// void PmergeMe::listMerge(int start, int end)
-// {
-//     std::list<int>::iterator midIt = _list.begin();
-// 	std::advance(midIt, (start + end) / 2); // advance "midIt" by "(start + end) / 2" count position forward
+void PmergeMe::listMerge(int start, int end)
+{
+    std::list<int>::iterator midIt = _list.begin();
+    std::advance(midIt, (start + end) / 2); // advance "midIt" by "(start + end) / 2" count position forward
 
-// 	std::list<int>::iterator leftIt = _list.begin();
-//     std::advance(leftIt, start); // advance "leftIt" by "start" count position forward
+    std::list<int>::iterator leftIt = _list.begin();
+    std::advance(leftIt, start); // advance "leftIt" by "start" count position forward
 
-//     std::list<int>::iterator rightIt = midIt;
-//     std::advance(rightIt, 1); // advance "rightIt" by 1 position forward
+    std::list<int>::iterator rightIt = midIt;
+    std::advance(rightIt, 1); // advance "rightIt" by 1 position forward
 
-// 	std::list<int>::iterator endIt = _list.begin();
-//     std::advance(leftIt, end); // advance "endIt" by "end" count position forward
+    std::list<int>::iterator endIt = _list.begin();
+    std::advance(endIt, end + 1); // advance "endIt" by "end + 1" count position forward
 
-//     std::list<int> tmpList;
+    std::list<int>::iterator midNextIt = midIt;
+    std::advance(midNextIt, 1); // advance "midNextIt" 1 position forward
 
-//     while (leftIt <= midIt && rightIt <= endIt)
-//     {
-//         if (*leftIt < *rightIt)
-//             tmpList.push_back(*leftIt++);
-//         else
-//             tmpList.push_back(*rightIt++);
-//     }
+    std::list<int> tmpList;
 
-//     while (leftIt <= midIt)
-//         tmpList.push_back(*leftIt++);
+    while (leftIt != midNextIt && rightIt != endIt)
+    {
+        if (*leftIt < *rightIt)
+            tmpList.push_back(*leftIt++);
+        else
+            tmpList.push_back(*rightIt++);
+    }
 
-//     while (rightIt <= endIt)
-//         tmpList.push_back(*rightIt++);
+    while (leftIt != midNextIt)
+        tmpList.push_back(*leftIt++);
 
-//     leftIt = _list.begin();
-//     std::advance(leftIt, start);
+    while (rightIt != endIt)
+        tmpList.push_back(*rightIt++);
 
-//     std::list<int>::iterator tmpIt = tmpList.begin();
-//     while (leftIt <= midIt)
-//         *leftIt++ = *tmpIt++;
+    leftIt = _list.begin();
+    std::advance(leftIt, start);
 
-//     while (tmpIt != tmpList.end())
-//         _list.insert(leftIt, *tmpIt++);
-// }
+    std::list<int>::iterator tmpIt = tmpList.begin();
+    while (leftIt != endIt)
+        *leftIt++ = *tmpIt++;
+}
 
 // ==== member functions (others) ============================================
 
 void	PmergeMe::fillDataBases(std::string &numbers)
 {
 	long long	num;
-	
+
 	size_t notAllowedCharPosition = numbers.find_first_not_of(" +0123456789"); // number must be a positive integer
 	if (notAllowedCharPosition != std::string::npos)
 		throw std::runtime_error("Error: invalid argument(s).");
@@ -228,4 +244,17 @@ void	PmergeMe::fillDataBases(std::string &numbers)
 			spacePosition = numbers.find(' ');
 		}
 	}
+}
+
+void	PmergeMe::listMergeInsertionSort(int start, int end)
+{
+    if (end - start < _listThreshold)
+	{
+		listInsertionSort(start, end);
+		return;
+    }
+
+    listMergeInsertionSort(start, (start + end) / 2);
+    listMergeInsertionSort((start + end) / 2 + 1, end);
+    listMerge(start, end);
 }

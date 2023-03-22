@@ -39,9 +39,9 @@ class  PmergeMe
 		void	vectorMergeInsertionSort(int start, int end);
 
 		void	listPrint(void) const;
-		void	listMergeInsertionSort(int start, int end); // add implementation		
+		void	listMergeInsertionSort(int start, int end); // add implementation
 
-	private:
+	// private:
 		void	fillDataBases(std::string &numbers);
 
 		void 	listInsertionSort(int start, int end);
