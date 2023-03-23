@@ -44,8 +44,8 @@ int RPN::expressionResult(std::string expression)
             {
                 if (last == 0)
                     return this->errorMsg("Error: division by zero.");
-                if (penultimate < std::numeric_limits<double>::min() * last)
-                    return this->errorMsg("Error: double overflow (~0).");
+                // if (penultimate < std::numeric_limits<double>::min() * last)
+                //     return this->errorMsg("Error: double overflow (~0).");
                 last = penultimate / last;
             }
             else if (*it == '*')
