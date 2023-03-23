@@ -19,22 +19,24 @@ int	main(int ac, char **av)
 		std::cout << RED << e.what() << RESET << std::endl;
 		return 1;
 	}
-	
+
+	// std::cout << "size = " << pmm.getVectorSize() << std::endl;
+	// std::cout << "size = " << pmm.getListSize() << std::endl;
 
 	// std::cout << "\nAFTER SORTING\n";
 	// pmm.vectorPrint(10);
 	// pmm.vectorCheckIfSorted();
-	// pmm.listPrint();
-	pmm.listPrint(10);
+	// pmm.listPrint(10);
+	// pmm.listPrintTest(1,8);
 	// pmm.listCheckIfSorted();
 
 	// pmm.vectorMergeInsertionSort(0, pmm.getVectorSize() - 1);
-	// pmm.listMergeInsertionSort(0, pmm.getListSize() - 1);
+	pmm.listMergeInsertionSort(0, pmm.getListSize() - 1);
 
 	// std::cout << "\nBEFORE SORTING\n";
-	// pmm.vectorPrint();
+	// pmm.vectorPrint(10);
 	// pmm.vectorCheckIfSorted();
-	// pmm.listPrint();
+	// pmm.listPrint(10);
 	// pmm.listCheckIfSorted();
 
 	return 0;

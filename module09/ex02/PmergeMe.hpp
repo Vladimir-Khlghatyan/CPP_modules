@@ -42,6 +42,7 @@ class  PmergeMe
 		void	vectorCheckIfSorted(void);
 
 		void	listPrint(unsigned int printCount) const;
+		void	listPrintTest(int start, int end) const;
 		void	listMergeInsertionSort(int start, int end); // add implementation
 		void	listCheckIfSorted(void);
 

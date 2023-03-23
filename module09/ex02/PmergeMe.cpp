@@ -181,12 +181,16 @@ void	PmergeMe::listPrint(unsigned int printCount) const
 	std::cout << RESET << std::endl;
 }
 
+// before: 28 24 5 7 25 22 9 2
+// after : 2 9 22 24 24 25 28 28
+
 void 	PmergeMe::listInsertionSort(int start, int end)
 {
   std::list<int>::iterator itStart, it, jt, tt;
   int i, tmp;
 
-  itStart = it = _list.begin();
+  itStart = _list.begin();
+  it = _list.begin();
   std::advance(itStart, start); // advance "itStart" by "start" count position forward
   std::advance(it, start + 1); // advance "it" by "start + 1" count position forward
 
@@ -194,7 +198,7 @@ void 	PmergeMe::listInsertionSort(int start, int end)
   {
 	tmp = *it;
 	jt = it;
-	while (jt != itStart  && *(--jt) > tmp)
+	while (jt != itStart && *(--jt) > tmp)
 	{
 		tt = jt;
 		++jt;
@@ -251,7 +255,11 @@ void	PmergeMe::listMergeInsertionSort(int start, int end)
 {
     if (end - start < _listThreshold)
 	{
+		std::cout << "before: "; //tmp
+		listPrintTest(start, end); //tmp
 		listInsertionSort(start, end);
+		std::cout << "after : "; //tmp
+		listPrintTest(start, end); //tmp
 		return;
     }
 
@@ -320,6 +328,25 @@ void	PmergeMe::fillDataBases(std::string &numbers)
 			spacePosition = numbers.find(' ');
 		}
 	}
+}
+
+
+
+void	PmergeMe::listPrintTest(int start, int end) const
+{
+	if (_list.empty() == true)
+		return ;
+	std::list<int>::const_iterator it = _list.begin();
+	std::advance(it, start);
+	std::cout << *it;
+	it++;
+	start++;
+	for (; it != _list.end() && start <= end; ++it)
+	{
+		std::cout << " " << *it;
+		start++;
+	}
+	std::cout << std::endl;
 }
 
 
