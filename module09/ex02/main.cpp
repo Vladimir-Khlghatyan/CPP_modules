@@ -21,20 +21,21 @@ int	main(int ac, char **av)
 	}
 	
 
-	std::cout << "\nAFTER SORTING\n";
-	pmm.vectorPrint(10);
-	pmm.vectorCheckIfSorted();
+	// std::cout << "\nAFTER SORTING\n";
+	// pmm.vectorPrint(10);
+	// pmm.vectorCheckIfSorted();
 	// pmm.listPrint();
-	pmm.listCheckIfSorted();
+	pmm.listPrint(10);
+	// pmm.listCheckIfSorted();
 
-	pmm.vectorMergeInsertionSort(0, pmm.getVectorSize() - 1);
-	pmm.listMergeInsertionSort(0, pmm.getListSize() - 1);
+	// pmm.vectorMergeInsertionSort(0, pmm.getVectorSize() - 1);
+	// pmm.listMergeInsertionSort(0, pmm.getListSize() - 1);
 
-	std::cout << "\nBEFORE SORTING\n";
+	// std::cout << "\nBEFORE SORTING\n";
 	// pmm.vectorPrint();
-	pmm.vectorCheckIfSorted();
+	// pmm.vectorCheckIfSorted();
 	// pmm.listPrint();
-	pmm.listCheckIfSorted();
+	// pmm.listCheckIfSorted();
 
 	return 0;
 }

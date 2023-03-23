@@ -159,16 +159,26 @@ int	PmergeMe::getVectorSize() const
 
 // ==== member functions (list part) =========================================
 
-void	PmergeMe::listPrint(void) const
+void	PmergeMe::listPrint(unsigned int printCount) const
 {
-	if (_list.empty() == true)
+	if (_list.empty() == true || printCount == 0)
 		return ;
 	std::list<int>::const_iterator it = _list.begin();
-	std::cout << *it;
+	std::cout << YELLOW << *it;
 	it++;
-	for (; it != _list.end(); ++it)
+	for (; it != _list.end() && --printCount; ++it)
 		std::cout << " " << *it;
-	std::cout << std::endl;
+	if (it != _list.end())
+	{
+		std::list<int>::const_iterator it2 = _list.end();
+		if (std::distance(it, it2) > 2)
+			std::cout << PINK << " [...]" << YELLOW;		
+		for (int i = 0; (i < 2) && (std::distance(it, it2) > 0); ++i)
+			it2--;
+		for (; it2 != _list.end(); ++it2)
+			std::cout << " " << *it2;
+	}
+	std::cout << RESET << std::endl;
 }
 
 void 	PmergeMe::listInsertionSort(int start, int end)
@@ -311,4 +321,5 @@ void	PmergeMe::fillDataBases(std::string &numbers)
 		}
 	}
 }
+
 

@@ -9,6 +9,7 @@
 # include <sstream>
 # include <string>
 # include <algorithm>
+# include <iterator>
 # include <climits>
 
 # define RED	"\33[1;31m"
@@ -40,7 +41,7 @@ class  PmergeMe
 		void	vectorMergeInsertionSort(int start, int end);
 		void	vectorCheckIfSorted(void);
 
-		void	listPrint(void) const;
+		void	listPrint(unsigned int printCount) const;
 		void	listMergeInsertionSort(int start, int end); // add implementation
 		void	listCheckIfSorted(void);
 
