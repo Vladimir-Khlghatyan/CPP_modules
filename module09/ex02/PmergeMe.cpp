@@ -1,9 +1,9 @@
 #include "PmergeMe.hpp"
 
 // ==== constructors ========================================================
-PmergeMe::PmergeMe(void) : _vectorThreshold(10), _listThreshold(10) { }
+PmergeMe::PmergeMe(void) : _vectorThreshold(16), _listThreshold(16) { }
 
-PmergeMe::PmergeMe(const std::string &numbers) : _vectorThreshold(10), _listThreshold(10)
+PmergeMe::PmergeMe(const std::string &numbers) : _vectorThreshold(16), _listThreshold(16)
 {
 	std::string non_const_numbers = numbers;
 	try {
