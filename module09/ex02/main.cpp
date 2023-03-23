@@ -12,7 +12,7 @@ int	main(int ac, char **av)
 	}
 
 	PmergeMe pmm;
-	
+
 	try {
 		pmm = PmergeMe(numbers);
 	} catch (const std::exception &e) {
@@ -20,24 +20,31 @@ int	main(int ac, char **av)
 		return 1;
 	}
 
-	// std::cout << "size = " << pmm.getVectorSize() << std::endl;
-	// std::cout << "size = " << pmm.getListSize() << std::endl;
+	int printCount = 10;
+	pmm.vectorPrint(printCount);
+	pmm.vectorCheckIfSorted();
+	pmm.listPrint(printCount);
+	pmm.listCheckIfSorted();
 
-	// std::cout << "\nAFTER SORTING\n";
-	// pmm.vectorPrint(10);
-	// pmm.vectorCheckIfSorted();
-	// pmm.listPrint(10);
-	// pmm.listPrintTest(1,8);
-	// pmm.listCheckIfSorted();
+	struct timeval tv;
+    gettimeofday(&tv, nullptr);
+    long long vectorStartTime = tv.tv_sec * 1000000LL + tv.tv_usec;
+	pmm.vectorMergeInsertionSort(0, pmm.getVectorSize() - 1);
+	gettimeofday(&tv, nullptr);
+    long long vectorEndTime = tv.tv_sec * 1000000LL + tv.tv_usec;
+	std::cout << "Time to process a range of " << pmm.getVectorSize();
+	std::cout << "elements with std::vector : " << vectorEndTime - vectorStartTime;
+	std::cout << " milliseconds" << std::endl;
 
-	// pmm.vectorMergeInsertionSort(0, pmm.getVectorSize() - 1);
+
+
 	pmm.listMergeInsertionSort(0, pmm.getListSize() - 1);
 
-	// std::cout << "\nBEFORE SORTING\n";
-	// pmm.vectorPrint(10);
-	// pmm.vectorCheckIfSorted();
-	// pmm.listPrint(10);
-	// pmm.listCheckIfSorted();
+	pmm.vectorPrint(printCount);
+	pmm.vectorCheckIfSorted();
+	pmm.listPrint(printCount);
+	pmm.listCheckIfSorted();
+
 
 	return 0;
 }

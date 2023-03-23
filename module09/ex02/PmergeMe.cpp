@@ -64,7 +64,7 @@ void	PmergeMe::vectorPrint(unsigned int printCount) const
 	{
 		std::vector<int>::const_iterator it2 = _vector.end();
 		if (it2 - it > 2)
-			std::cout << PINK << " [...]" << YELLOW;		
+			std::cout << PINK << " [...]" << YELLOW;
 		for (int i = 0; (i < 2) && (it2 > it); ++i)
 			it2--;
 		for (; it2 != _vector.end(); ++it2)
@@ -172,7 +172,7 @@ void	PmergeMe::listPrint(unsigned int printCount) const
 	{
 		std::list<int>::const_iterator it2 = _list.end();
 		if (std::distance(it, it2) > 2)
-			std::cout << PINK << " [...]" << YELLOW;		
+			std::cout << PINK << " [...]" << YELLOW;
 		for (int i = 0; (i < 2) && (std::distance(it, it2) > 0); ++i)
 			it2--;
 		for (; it2 != _list.end(); ++it2)
@@ -180,9 +180,6 @@ void	PmergeMe::listPrint(unsigned int printCount) const
 	}
 	std::cout << RESET << std::endl;
 }
-
-// before: 28 24 5 7 25 22 9 2
-// after : 2 9 22 24 24 25 28 28
 
 void 	PmergeMe::listInsertionSort(int start, int end)
 {
@@ -205,7 +202,10 @@ void 	PmergeMe::listInsertionSort(int start, int end)
 		*jt = *tt;
 		--jt;
 	}
-	*jt = tmp;
+	if (*jt > tmp)
+		*jt = tmp;
+	else
+		*(++jt) = tmp;
 	++it;
   }
 }
@@ -255,11 +255,7 @@ void	PmergeMe::listMergeInsertionSort(int start, int end)
 {
     if (end - start < _listThreshold)
 	{
-		std::cout << "before: "; //tmp
-		listPrintTest(start, end); //tmp
 		listInsertionSort(start, end);
-		std::cout << "after : "; //tmp
-		listPrintTest(start, end); //tmp
 		return;
     }
 
@@ -329,24 +325,4 @@ void	PmergeMe::fillDataBases(std::string &numbers)
 		}
 	}
 }
-
-
-
-void	PmergeMe::listPrintTest(int start, int end) const
-{
-	if (_list.empty() == true)
-		return ;
-	std::list<int>::const_iterator it = _list.begin();
-	std::advance(it, start);
-	std::cout << *it;
-	it++;
-	start++;
-	for (; it != _list.end() && start <= end; ++it)
-	{
-		std::cout << " " << *it;
-		start++;
-	}
-	std::cout << std::endl;
-}
-
 

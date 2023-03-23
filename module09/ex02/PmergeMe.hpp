@@ -11,6 +11,8 @@
 # include <algorithm>
 # include <iterator>
 # include <climits>
+# include <ctime>
+# include <sys/time.h>
 
 # define RED	"\33[1;31m"
 # define GREEN	"\33[1;32m"
@@ -42,7 +44,6 @@ class  PmergeMe
 		void	vectorCheckIfSorted(void);
 
 		void	listPrint(unsigned int printCount) const;
-		void	listPrintTest(int start, int end) const;
 		void	listMergeInsertionSort(int start, int end); // add implementation
 		void	listCheckIfSorted(void);
 
