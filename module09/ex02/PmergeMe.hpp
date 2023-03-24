@@ -42,9 +42,9 @@ class  PmergeMe
 		void	vectorPrint(unsigned int printCount) const;
 		void	vectorMergeInsertionSort(int start, int end);
 		void	vectorCheckIfSorted(void);
-
+		
 		void	listPrint(unsigned int printCount) const;
-		void	listMergeInsertionSort(int start, int end); // add implementation
+		void	listMergeInsertionSort(int start, int end);
 		void	listCheckIfSorted(void);
 
 		int		getVectorSize() const;
@@ -53,12 +53,11 @@ class  PmergeMe
 	private:
 		void	fillDataBases(std::string &numbers);
 
-		void 	listInsertionSort(int start, int end);
-		void 	listMerge(int start, int end); // add implementation
-
 		void 	vectorInsertionSort(int start, int end);
 		void 	vectorMerge(int start, int end);
 
+		void 	listInsertionSort(int start, int end);
+		void 	listMerge(int start, int end);
 };
 
 #endif

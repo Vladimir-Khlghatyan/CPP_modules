@@ -31,17 +31,17 @@ int	main(int ac, char **av)
 
 
     // sorting numbers with std::vector
-	gettimeofday(&tv, nullptr);
+	gettimeofday(&tv, NULL);
     long long vectorStartTime = tv.tv_sec * 1000000LL + tv.tv_usec;
 	pmm.vectorMergeInsertionSort(0, pmm.getVectorSize() - 1);
-	gettimeofday(&tv, nullptr);
+	gettimeofday(&tv, NULL);
     long long vectorEndTime = tv.tv_sec * 1000000LL + tv.tv_usec;
 
 	// sorting numbers with std::list
-	gettimeofday(&tv, nullptr);
+	gettimeofday(&tv, NULL);
     long long listStartTime = tv.tv_sec * 1000000LL + tv.tv_usec;
 	pmm.listMergeInsertionSort(0, pmm.getListSize() - 1);
-	gettimeofday(&tv, nullptr);
+	gettimeofday(&tv, NULL);
     long long listEndTime = tv.tv_sec * 1000000LL + tv.tv_usec;
 
 	// print numbers after sorting
@@ -69,5 +69,10 @@ int	main(int ac, char **av)
 	return 0;
 }
 
-// ARG=$(ruby -e "puts (1..100).to_a.shuffle.join(' ')"); ./PmergeMe $ARG
+// For linux:
 // ./PmergeMe `shuf -i 1-100000 -n 3000 | tr "\n" " "`
+// ARG=$(ruby -e "puts (1..100).to_a.shuffle.join(' ')"); ./PmergeMe $ARG
+
+// For OSX:
+// ./PmergeMe `jot -r 3000 1 1000 | tr '\n' ' '`
+// ARG=$(ruby -e "puts (1..100).to_a.shuffle.join(' ')"); ./PmergeMe $ARG

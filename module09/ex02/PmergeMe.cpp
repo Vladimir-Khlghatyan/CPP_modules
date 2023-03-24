@@ -1,9 +1,9 @@
 #include "PmergeMe.hpp"
 
 // ==== constructors ========================================================
-PmergeMe::PmergeMe(void) : _vectorThreshold(16), _listThreshold(16) { }
+PmergeMe::PmergeMe(void) { }
 
-PmergeMe::PmergeMe(const std::string &numbers) : _vectorThreshold(16), _listThreshold(16)
+PmergeMe::PmergeMe(const std::string &numbers)
 {
 	std::string non_const_numbers = numbers;
 	try {
@@ -11,6 +11,19 @@ PmergeMe::PmergeMe(const std::string &numbers) : _vectorThreshold(16), _listThre
 	} catch (const std::exception &e) {
 		throw std::runtime_error("Error: invalid argument(s).");
 	}
+
+	// The best base case for the merge-insertion sorting algorithm
+	// depends on various factors such as the size of the input array,
+	// the specific implementation of the algorithm,
+	// and the hardware on which it is running.
+	// However, a common value for the base case is between 10 and 20 elements.
+
+	// In my personal experience, for arrays larger than 3000, the best result
+	// is obtained when the "Threshold" is about 1% of the array size.
+
+	_listThreshold = _vectorThreshold = getVectorSize() / 100;
+	if (_vectorThreshold < 16)
+		_listThreshold = _vectorThreshold = 16;
 }
 
 PmergeMe::PmergeMe(const PmergeMe &other)
@@ -45,9 +58,7 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &rhs)
 	return (*this);
 }
 
-PmergeMe::~PmergeMe(void)
-{
-}
+PmergeMe::~PmergeMe(void) { }
 
 // ==== member functions (vector part) =======================================
 
@@ -104,7 +115,6 @@ void PmergeMe::vectorMerge(int start, int end)
         else
 			tmpVec[k++] = _vector[j++];
     }
-
     while (i <= mid)
 		tmpVec[k++] = _vector[i++];
 
@@ -122,7 +132,6 @@ void	PmergeMe::vectorMergeInsertionSort(int start, int end)
 		vectorInsertionSort(start, end);
 		return;
     }
-
     vectorMergeInsertionSort(start, (start + end) / 2);
     vectorMergeInsertionSort((start + end) / 2 + 1, end);
     vectorMerge(start, end);
@@ -258,7 +267,6 @@ void	PmergeMe::listMergeInsertionSort(int start, int end)
 		listInsertionSort(start, end);
 		return;
     }
-
     listMergeInsertionSort(start, (start + end) / 2);
     listMergeInsertionSort((start + end) / 2 + 1, end);
     listMerge(start, end);
@@ -325,4 +333,3 @@ void	PmergeMe::fillDataBases(std::string &numbers)
 		}
 	}
 }
-
