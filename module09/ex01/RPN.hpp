@@ -28,7 +28,7 @@ class RPN
       ~RPN(void);						          // Destructor
 
     public:
-      int    expressionResult(std::string expression);
+      int    expressionResult(std::string &expression);
 
     private:
       void    strTrim(std::string &str);

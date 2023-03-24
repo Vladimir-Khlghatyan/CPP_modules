@@ -9,7 +9,7 @@ RPN::~RPN(void) { }
 
 //==== member functions =================================================================
 
-int RPN::expressionResult(std::string expression)
+int RPN::expressionResult(std::string &expression)
 {
     double penultimate;
     double last;
@@ -75,15 +75,10 @@ int RPN::expressionResult(std::string expression)
 void RPN::strTrim(std::string &str)
 {
     size_t startPosition = str.find_first_not_of(" \f\n\r\t\v");
-    if (startPosition != std::string::npos)
-        str.erase(0, startPosition);
+    str.erase(0, startPosition);
 
     size_t endPosition = str.find_last_not_of(" \f\n\r\t\v");
-    if (endPosition != std::string::npos)
-        str.erase(endPosition + 1);
-
-    if (startPosition == std::string::npos && endPosition == std::string::npos)
-        str.clear();
+    str.erase(endPosition + 1);
 }
 
 void RPN::removeUnnecessarySpaces(std::string &str)
@@ -116,9 +111,9 @@ int RPN::checkAllowedSymbols(std::string &str)
     if (startPosition != std::string::npos)
         return this->errorMsg("Error: unexpected symbol in the expression.");
 
-    for (std::string::iterator it = str.begin(); it < str.end(); ++it)
-        if (std::isdigit(*it) && it != str.begin() && std::isdigit(*(it - 1)))
-            return this->errorMsg("Error: the numbers must be single digits.");
+    // for (std::string::iterator it = str.begin(); it < str.end(); ++it)
+    //     if (std::isdigit(*it) && it != str.begin() && std::isdigit(*(it - 1)))
+    //         return this->errorMsg("Error: the numbers must be single digits.");
     return 0;
 }
 
