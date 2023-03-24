@@ -3,8 +3,10 @@
 // ==== constructors ========================================================
 BitcoinExchange::BitcoinExchange(std::ifstream &databaseFile)
 {
-	std::string line, date, rate;
-	size_t 		commaPos;
+	std::string						line, date, rate;
+	size_t 							commaPos;
+	unsigned int					daysSinceEra;
+	std::pair<std::string, float>	msgAndNumPair;
 
 	std::getline(databaseFile, line); // omitting first line
 	while (std::getline(databaseFile, line))
@@ -15,7 +17,8 @@ BitcoinExchange::BitcoinExchange(std::ifstream &databaseFile)
 			rate = line.substr(commaPos + 1);
 		else
 			rate = "";
-		if (!is_valid_date(date))
+		daysSinceEra = is_valid_date(date);
+		if (!daysSinceEra)
 		{
 			_database.clear();
 			std::cout << RED << "[Rates DB] Error: bad input => ";
@@ -23,13 +26,14 @@ BitcoinExchange::BitcoinExchange(std::ifstream &databaseFile)
 			std::cout << RESET << std::endl;
 			return ;
 		}
-		if (is_valid_number(rate).first != "ok")
+		msgAndNumPair = is_valid_number(rate);
+		if (msgAndNumPair.first != "ok")
 		{
 			_database.clear();
-			std::cout << RED << "[Rates DB] " << is_valid_number(rate).first << std::endl;
+			std::cout << RED << "[Rates DB] " << msgAndNumPair.first << std::endl;
 			return ;
 		}
-		_database[is_valid_date(date)] = is_valid_number(rate).second;
+		_database[daysSinceEra] = msgAndNumPair.second;
 	}
 }
 
@@ -63,8 +67,9 @@ void 	BitcoinExchange::display_values_multiplied_by_the_exchange_rates(std::ifst
 	if (_database.empty())
 		return ;
 
-	std::string	line, date, value;
-	size_t 		pipePos, dateInDays;
+	std::string						line, date, value;
+	size_t 							pipePos, dateInDays;
+	std::pair<std::string, float>	msgAndNumPair;
 
 	std::getline(priceFile, line); // omitting first line
 	while (std::getline(priceFile, line))
@@ -86,24 +91,25 @@ void 	BitcoinExchange::display_values_multiplied_by_the_exchange_rates(std::ifst
 				std::cout << RED << "Error: date not found in database => " << YELLOW << date << RESET << std::endl;
 			else
 			{
-				if (is_valid_number(value).first != "ok")
+				msgAndNumPair = is_valid_number(value);
+				if (msgAndNumPair.first != "ok")
 				{
 					if (value == "")
 					{
-						std::cout << is_valid_number(value).first;
+						std::cout << msgAndNumPair.first;
 						std::cout << YELLOW << line.substr(0, line.length() - 1);
 						std::cout << "..." << RESET << std::endl;
 					}
 					else
-						std::cout << is_valid_number(value).first << std::endl;
+						std::cout << msgAndNumPair.first << std::endl;
 				}
-				else if (is_valid_number(value).second > 1000)
+				else if (msgAndNumPair.second > 1000)
 					std::cout << RED << "Error: price is greater than 1000 => " << YELLOW << value << RESET << std::endl;
 				else
 				{
 					std::cout << GREEN << date << " => ";
-					std::cout << std::setw(6) << is_valid_number(value).second << " = ";
-					std::cout << is_valid_number(value).second * (*it).second << RESET << std::endl;
+					std::cout << std::setw(6) << msgAndNumPair.second << " = ";
+					std::cout << msgAndNumPair.second * (*it).second << RESET << std::endl;
 				}
 			}
 		}
@@ -293,13 +299,8 @@ unsigned int	BitcoinExchange::date_to_days_since_era(int year, int month, int da
 void BitcoinExchange::strTrim(std::string &str)
 {
     size_t startPosition = str.find_first_not_of(" \f\n\r\t\v");
-    if (startPosition != std::string::npos)
-        str.erase(0, startPosition);
+    str.erase(0, startPosition);
 
     size_t endPosition = str.find_last_not_of(" \f\n\r\t\v");
-    if (endPosition != std::string::npos)
-        str.erase(endPosition + 1);
-
-    if (startPosition == std::string::npos && endPosition == std::string::npos)
-        str.clear();
+    str.erase(endPosition + 1);
 }
