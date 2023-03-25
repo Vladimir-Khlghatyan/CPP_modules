@@ -2,14 +2,14 @@ SRCS		= ${wildcard ./*.cpp}
 OBJS 		= ${SRCS:.cpp=.o}
 CC			= c++
 RM			= rm -f
-CFLAGS		= -Wall -Wextra -Werror -std=c++98
+CPPFLAGS		= -Wall -Wextra -Werror -std=c++98
 NAME		= btc
 
 %.o: %.cpp *.hpp
-			@$(CC) ${CFLAGS} -c $< -o $@
+			@$(CC) ${CPPFLAGS} -c $< -o $@
 
 $(NAME):	$(OBJS)
-			@$(CC) $(OBJS) $(CFLAGS) -o $(NAME)
+			@$(CC) $(OBJS) $(CPPFLAGS) -o $(NAME)
 			@echo "$(GREEN) ✔ $(NAME) created!$(DEFAULT)"
 
 all:		${NAME}

@@ -8,6 +8,7 @@
 # include <string>
 # include <algorithm>
 # include <iomanip>
+# include <numeric>
 
 # include <cmath>
 # include <ctime>
@@ -37,7 +38,7 @@ class BitcoinExchange
 	public:
 		void	display_values_multiplied_by_the_exchange_rates(std::ifstream &priceFile);
 
-	private:		
+	private:
 		unsigned int 					is_valid_date(const std::string &dateStr);
 		std::pair<std::string, float>	is_valid_number(const std::string &numStr);
 		unsigned int 					date_to_days_since_era(int year, int month, int day);
